@@ -1,4 +1,4 @@
-import { features } from "../data/kir.json";
+import { features } from "../data/dummydata.json";
 let tempdata;
 
 fetch(
