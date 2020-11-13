@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import 'react-resizable/css/styles.css';
+// import 'react-resizable/css/styles.css';
 
 import '../styles/dashStyle.css';
 
@@ -8,15 +8,42 @@ import WorldTable from './WorldTable';
 import Covidmap from './Covidmap';
 import Viz from './Viz';
 import Vizz from './Vizz';
+import ListBrowser from './ListBrowser';
 
-// Handles the responsive nature of the grid
-const ResponsiveGridLayout = WidthProvider(Responsive);
-// Determines the screen breakpoints for the columns
-const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 320 };
-// How many columns are available at each breakpoint
-const cols = { lg: 4, md: 4, sm: 1, xs: 1, xxs: 1 };
+import axios from 'axios';
 
 function Covid19(){
+	const [ map, setMap ] = useState(null);
+
+	useEffect(() => {
+		axios
+			.get(
+				'https://cdn.glitch.com/748630ea-d707-440c-b84a-700982a6ab90%2Fhextest%20-%20Copy.json?v=1603727824740'
+			)
+			.then((res) => {
+				console.log(res.data);
+				setMap(res.data);
+			});
+
+		// let ignore = false;
+
+		// async function fetchData(){
+		// 	const result = await axios(
+		// 		'https://cdn.glitch.com/748630ea-d707-440c-b84a-700982a6ab90%2Fhextest%20-%20Copy.json?v=1603727824740'
+		// 	);
+		// 	if (!ignore) {
+		// 		let jsonized = result.data;
+		// 		console.log(jsonized);
+		// 		setMap(features);
+		// 	}
+		// }
+
+		// fetchData();
+		// return () => {
+		// 	ignore = true;
+		// };
+	}, []);
+
 	// const loadData = () => {
 	// 	let tempdata;
 	// 	fetch(
@@ -33,35 +60,47 @@ function Covid19(){
 
 	return (
 		<div className='App'>
-			<div className='w-full'>
-				<header className='flex bg-gray-900 m-5 p-5 shadow-lg rounded-lg'>
-					<h1 className='text-2xl text-teal-400'>Collaborative Health Dashboard</h1>
-				</header>
-
-				<ResponsiveGridLayout className='my-5 mx-8' breakpoints={breakpoints} cols={cols}>
-					<div className='grid-cell' key='1' data-grid={{ x: 0, y: 0, w: 2, h: 3 }}>
-						<h3 className='grid-header'>Main Map</h3>
+			<div class='containerDash'>
+				<nav className='navDash'>Navbar</nav>
+				<div className='mainDash'>
+					<span>
 						<Covidmap />
-					</div>
+					</span>
+				</div>
+				<div className='sidebarDash'>
+					<ListBrowser />
+				</div>
+				<div className='content1'>
+					{' '}
+					<span>
+						<Covidmap />
+					</span>
+				</div>
+				<div className='content2'>
+					<Viz />
+				</div>
 
-					<div className='grid-cell' key='2' data-grid={{ x: 2, y: 0, w: 2, h: 3 }}>
-						<h3 className='grid-header'>Data Insight</h3>
-						<WorldTable />
-					</div>
-					<div className='grid-cell' key='3' data-grid={{ x: 0, y: 3, w: 1, h: 2 }}>
-						<h3 className='grid-header'>Data Table</h3>
-						{/* <Vizz /> */}
+				<div className='content4'>kir</div>
+				<div className='content3'>
+					<WorldTable />
+				</div>
+				<footer
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						alignContent: 'center'
+					}}>
+					<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
 						<Viz />
 					</div>
-					<div className='grid-cell' key='4' data-grid={{ x: 2, y: 3, w: 3, h: 2 }}>
-						<h3 className='grid-header'>Analysis</h3>
+					<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
 						<Viz />
 					</div>
-					<div className='grid-cell' key='5' data-grid={{ x: 0, y: 0, w: 2, h: 3 }}>
-						<h3 className='grid-header'>Main Map</h3>
-						<Covidmap />
+					<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
+						<Viz />
 					</div>
-				</ResponsiveGridLayout>
+				</footer>
 			</div>
 		</div>
 
