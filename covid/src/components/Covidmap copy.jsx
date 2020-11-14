@@ -3,7 +3,7 @@ import { Map, GeoJSON, TileLayer, LayersControl } from 'react-leaflet';
 
 import { features } from '../data/bound';
 import axios from 'axios';
-function Covidmap(props){
+function Covidmap(){
 	const mapStyle = {
 		fillColor: 'white',
 		weight: 1,
@@ -25,9 +25,6 @@ function Covidmap(props){
 	return (
 		<Map style={{ height: '100%', width: '100%' }} zoom={10} center={[ 41.8781, -87.6298 ]}>
 			<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-			<GeoJSON data={props.data} style={mapStyle} />
-			<GeoJSON data={props.data} style={mapStyle} />
-			<GeoJSON data={props.data} style={mapStyle} />
 		</Map>
 
 		// <Map center={center} zoom={13} style={{ height: '100%', width: '100%' }}>

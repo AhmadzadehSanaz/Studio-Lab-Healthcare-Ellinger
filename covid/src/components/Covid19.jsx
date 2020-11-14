@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 // import 'react-resizable/css/styles.css';
 
@@ -13,76 +13,44 @@ import ListBrowser from './ListBrowser';
 import axios from 'axios';
 
 function Covid19(){
-	const [ map, setMap ] = useState(null);
-
+	//Getting parent componets refs to pass as prop div height to list componet for maxHeight argument
+	const [ divHeight, setDivHeight ] = useState(null);
+	const listDivRef = useRef(null);
+	//Reading heigh after it's rendered
 	useEffect(() => {
-		axios
-			.get(
-				'https://cdn.glitch.com/748630ea-d707-440c-b84a-700982a6ab90%2Fhextest%20-%20Copy.json?v=1603727824740'
-			)
-			.then((res) => {
-				console.log(res.data);
-				setMap(res.data);
-			});
-
-		// let ignore = false;
-
-		// async function fetchData(){
-		// 	const result = await axios(
-		// 		'https://cdn.glitch.com/748630ea-d707-440c-b84a-700982a6ab90%2Fhextest%20-%20Copy.json?v=1603727824740'
-		// 	);
-		// 	if (!ignore) {
-		// 		let jsonized = result.data;
-		// 		console.log(jsonized);
-		// 		setMap(features);
-		// 	}
-		// }
-
-		// fetchData();
-		// return () => {
-		// 	ignore = true;
-		// };
-	}, []);
-
-	// const loadData = () => {
-	// 	let tempdata;
-	// 	fetch(
-	// 		'https://cdn.glitch.com/748630ea-d707-440c-b84a-700982a6ab90%2Fhextest%20-%20Copy.json?v=1603727824740'
-	// 	)
-	// 		.then((response) => {
-	// 			return response.json();
-	// 		})
-	// 		.then((data) => {
-	// 			setCountries(data);
-
-	// 		});
-	// };
+		setDivHeight(listDivRef.current.offsetHeight);
+	});
 
 	return (
 		<div className='App'>
 			<div class='containerDash'>
 				<nav className='navDash'>Navbar</nav>
+
 				<div className='mainDash'>
 					<span>
 						<Covidmap />
 					</span>
 				</div>
-				<div className='sidebarDash'>
-					<ListBrowser />
+
+				<div className='sidebarDash' ref={listDivRef}>
+					<ListBrowser map={divHeight} />
 				</div>
+
 				<div className='content1'>
-					{' '}
 					<span>
 						<Covidmap />
 					</span>
 				</div>
-				<div className='content2'>
-					<Viz />
+
+				<div className='content2' ref={listDivRef}>
+					<ListBrowser map={divHeight} />
 				</div>
 
-				<div className='content4'>kir</div>
+				<div className='content4'>container4</div>
+
 				<div className='content3'>
 					<WorldTable />
+					{/* <Vizz /> */}
 				</div>
 				<footer
 					style={{
@@ -103,18 +71,6 @@ function Covid19(){
 				</footer>
 			</div>
 		</div>
-
-		// <div>
-		// 	<div style={{ display: 'flex' }}>
-		// 		<Covidmap />
-		// 		<div style={{ height: '300px' }}>
-		// 			<Viz />
-		// 		</div>
-
-		// 		<WorldTable />
-		// 	</div>
-		/* <div>{countries.length === 0 ? (<Loading />) : (<div><Covidmap countries={countries} /> <Legend /></div>)}</div > */
-		// </div>
 	);
 }
 

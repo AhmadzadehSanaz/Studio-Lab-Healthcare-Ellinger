@@ -46,13 +46,13 @@ class WorldTable extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div style={{ marginLeft: '10px', marginRight: '10px' }}>
+				<div style={{ marginLeft: '5px', marginRight: '5px' }}>
 					<br />
 
 					<MuiThemeProvider theme={this.getMuiTheme()}>
 						<MUIDataTable
 							title={
-								<h1 style={{ float: 'left', color: '#3f51b5' }}>Sample Table</h1>
+								<h6 style={{ float: 'left', color: '#3f51b5' }}>Data Explorer</h6>
 							}
 							isLoading={this.state.loading}
 							columns={[
@@ -130,7 +130,8 @@ class WorldTable extends React.Component {
 								filterType: 'dropdown',
 								selectableRows: true,
 								responsive: 'stacked',
-								tableBodyHeight: '280px'
+								tableBodyHeight: '300px',
+								rowsPerPageOptions: [ 5, 10, 15 ]
 							}}
 						/>
 					</MuiThemeProvider>
