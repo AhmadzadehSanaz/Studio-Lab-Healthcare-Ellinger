@@ -2,6 +2,7 @@ import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
+
 class WorldTable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -17,7 +18,7 @@ class WorldTable extends React.Component {
 			overrides: {
 				MUIDataTable: {
 					root: {
-						backgroundColor: 'inherit'
+						backgroundColor: 'red'
 					},
 					paper: {
 						boxShadow: 'none'
@@ -25,7 +26,14 @@ class WorldTable extends React.Component {
 				},
 				MUIDataTableBodyCell: {
 					root: {
-						backgroundColor: 'none'
+						backgroundColor: 'inherit',
+						padding: '1px'
+					}
+				},
+				MUIDataTableBodyCell: {
+					root: {
+						backgroundColor: 'inherit',
+						padding: '0px'
 					}
 				}
 			}
@@ -59,66 +67,43 @@ class WorldTable extends React.Component {
 								{
 									name: 'country',
 									label: 'Country',
-									options: {
-										filter: true,
-										sort: true
-									}
+							
 								},
 								{
 									name: 'cases',
 									label: 'Total Cases',
-									options: {
-										filter: true,
-										sort: false
-									}
+						
 								},
 								{
 									name: 'todayCases',
 									label: 'Current Cases',
-									options: {
-										filter: true,
-										sort: false
-									}
+						
 								},
 								{
 									name: 'deaths',
 									label: 'Total Deaths',
-									options: {
-										filter: true,
-										sort: false
-									}
+							
 								},
 								{
 									name: 'todayDeaths',
 									label: 'Current Deaths',
-									options: {
-										filter: true,
-										sort: false
-									}
+							
 								},
 								{
 									name: 'recovered',
 									label: 'Recovered Patients',
-									options: {
-										filter: true,
-										sort: false
-									}
+								
+									
 								},
 								{
 									name: 'active',
 									label: 'Active Cases',
-									options: {
-										filter: true,
-										sort: false
-									}
+							
 								},
 								{
 									name: 'critical',
 									label: 'Critical Patients',
-									options: {
-										filter: true,
-										sort: false
-									}
+							
 								}
 							]}
 							data={this.state.stats}
@@ -131,7 +116,8 @@ class WorldTable extends React.Component {
 								selectableRows: true,
 								responsive: 'stacked',
 								tableBodyHeight: '300px',
-								rowsPerPageOptions: [ 5, 10, 15 ]
+						
+								rowsPerPageOptions: [ 5,10,50]
 							}}
 						/>
 					</MuiThemeProvider>

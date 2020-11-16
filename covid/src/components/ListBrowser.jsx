@@ -5,28 +5,31 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Checkbox from '@material-ui/core/Checkbox';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+
 import Typography from '@material-ui/core/Typography';
-import { features as dummyDataList } from '../data/dummydata.json';
-
-//data prepration
-
-var listItems;
-//getting the first object from geojson to extract column names
-for (var key in dummyDataList) {
-	if (dummyDataList.hasOwnProperty(key)) {
-		let firstProp = dummyDataList[key];
-		listItems = Object.keys(firstProp.properties);
-		console.log(listItems);
-		break;
-	}
-}
+import { features as dummyDataList } from '../data/mainData.json';
 
 export default function ListBrowser(props){
+	var listItems;
+
+	//getting the first object from geojson to extract column names
+	for (var key in dummyDataList) {
+		if (dummyDataList.hasOwnProperty(key)) {
+			let firstProp = dummyDataList[key];
+			listItems = Object.keys(firstProp.properties);
+
+			break;
+		}
+	}
+
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			height: '100%',
 			maxHeight: props.divHeight - 10,
+			width: '100%',
+			maxWidth: '36ch',
 			backgroundColor: theme.palette.background.paper,
 			position: 'relative',
 			overflow: 'auto'
@@ -34,9 +37,8 @@ export default function ListBrowser(props){
 		listSection: {
 			backgroundColor: 'inherit'
 		},
-		ul: {
-			backgroundColor: 'inherit',
-			padding: 0
+		MuiListItem: {
+			dense: true
 		}
 	}));
 
@@ -59,7 +61,7 @@ export default function ListBrowser(props){
 	};
 
 	return (
-		<List className={classes.root} subheader={<li />}>
+		<List className={classes.root} subheader={<li />} dense={true}>
 			<Typography variant='h6' className={classes.title}>
 				Features
 			</Typography>
@@ -67,16 +69,16 @@ export default function ListBrowser(props){
 			{listItems.map((sectionId) => (
 				<li key={`section-${sectionId}`} className={classes.listSection}>
 					<ul className={classes.ul}>
-						<ListItem key={`item-${sectionId}-${sectionId}`}>
-							<ListItemText primary={`Item ${sectionId}`} />
-							<ListItemSecondaryAction>
+						<ListItem dense={true} button key={`${sectionId}`}>
+							<ListItemIcon>
 								<Checkbox
-									edge='end'
+									edge='start'
 									onChange={handleToggle(sectionId)}
-									// checked={checked.indexOf(sectionId) !== -1}
-									// inputProps={{ 'aria-labelledby': sectionId }}
+									checked={checked.indexOf(sectionId) !== -1}
+									inputProps={{ 'aria-labelledby': sectionId }}
 								/>
-							</ListItemSecondaryAction>
+							</ListItemIcon>
+							<ListItemText secondary={`${sectionId}`} mu />
 						</ListItem>
 					</ul>
 				</li>

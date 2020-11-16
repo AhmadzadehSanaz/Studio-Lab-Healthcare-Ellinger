@@ -31,10 +31,18 @@ body {
 
 .containerDash {
     display: grid;
-    height: 100vh;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.1fr;
-    grid-template-rows: 0.8fr 1.5fr 1.2fr 2fr 2fr;
-    grid-template-areas: "nav nav nav nav nav nav" "content4 content4 content4 main main main" "sidebar content1 content2  main main main" "sidebar content1 content2  main main main" "sidebar content3 content3  footer footer footer";
+    height: 150vh;
+    width: 100wh;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-rows: 0.3fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 320px);
+    grid-template-areas: "nav nav nav nav nav nav"/*Nav */
+    "content1 content1 content1 main main main"/*Content 4    Map */
+    "sidebar content2 content3 main main main"/*Content 4    Map */
+    "sidebar content2 content3 main main main"/*Content 4    Map */
+    "sidebar content4 content4 content5 content5 content5"/*Sidebar  ListSelector    Map */
+    "sidebar content8 content8 content5 content5 content5"/*Content 4    Map */
+    "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
+    ;
     grid-gap: 0.2rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -72,26 +80,55 @@ body {
 }
 
 .content2 {
+    background: 'red';
     grid-area: content2;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
 }
 
 .content3 {
-    background: #73ffba;
+    background: #19cf22;
     grid-area: content3;
     border-radius: var(--main-radius);
 }
 
 .content4 {
-    background: #73ffba;
     grid-area: content4;
+    height: '100%';
+    overflow: auto;
+    line-height: '300px';
     border-radius: var(--main-radius);
 }
 
-footer {
-    background: #1de9b6;
-    grid-area: footer;
+.content5 {
+    background: #73ffba;
+    grid-area: content5;
+    border-radius: var(--main-radius);
+}
+
+.content6 {
+    background: #80121b;
+    grid-area: content6;
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+}
+
+.content7 {
+    background: #80121b;
+    grid-area: content7;
+    height: '100%';
+    overflow: auto;
+    line-height: '300px';
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+}
+
+.content8 {
+    background: #e78c93;
+    grid-area: content8;
+    height: '100%';
+    overflow: auto;
+    line-height: '300px';
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
 }
