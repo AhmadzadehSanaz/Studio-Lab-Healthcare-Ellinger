@@ -12,12 +12,10 @@
     font-weight: 700;
 } */
 
-
-/* :root {
+:root {
     --main-radius: 5px;
     --main-padding: 5px;
-    --main
-} */
+}
 
 * {
     box-sizing: border-box;
@@ -33,17 +31,17 @@ body {
     display: grid;
     height: 150vh;
     width: 100wh;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr 0.5fr;
-    grid-template-rows: 0.3fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 320px);
+    grid-template-columns: 0.5fr 1fr minmax(400px, auto) 1fr 1fr 0.5fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 360px);
     grid-template-areas: "nav nav nav nav nav nav"/*Nav */
-    "content1 content1 content1 main main main"/*Content 4    Map */
-    "sidebar content2 content3 main main main"/*Content 4    Map */
-    "sidebar content2 content3 main main main"/*Content 4    Map */
+    "content1 content1 content1 content1 main main"/*Content 4    Map */
+    "sidebar content2 content3 content3 main main"/*Content 4    Map */
+    "sidebar content2 content3 content3 main main"/*Content 4    Map */
     "sidebar content4 content4 content5 content5 content5"/*Sidebar  ListSelector    Map */
     "sidebar content8 content8 content5 content5 content5"/*Content 4    Map */
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     ;
-    grid-gap: 0.2rem;
+    grid-gap: 0.5rem;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 12px;
@@ -58,11 +56,13 @@ body {
     grid-area: nav;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .mainDash {
     grid-area: main;
     height: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .sidebarDash {
@@ -70,6 +70,7 @@ body {
     grid-area: sidebar;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content1 {
@@ -77,6 +78,7 @@ body {
     grid-area: content1;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content2 {
@@ -84,12 +86,14 @@ body {
     grid-area: content2;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content3 {
-    background: #19cf22;
+    background: #f4f4f4;
     grid-area: content3;
     border-radius: var(--main-radius);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content4 {
@@ -98,12 +102,14 @@ body {
     overflow: auto;
     line-height: '300px';
     border-radius: var(--main-radius);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content5 {
-    background: #73ffba;
+    background: #f4f4f4;
     grid-area: content5;
     border-radius: var(--main-radius);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content6 {
@@ -111,6 +117,7 @@ body {
     grid-area: content6;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content7 {
@@ -121,6 +128,7 @@ body {
     line-height: '300px';
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content8 {
@@ -131,6 +139,7 @@ body {
     line-height: '300px';
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 a {

@@ -2,7 +2,6 @@ import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-
 class WorldTable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -66,44 +65,35 @@ class WorldTable extends React.Component {
 							columns={[
 								{
 									name: 'country',
-									label: 'Country',
-							
+									label: 'Country'
 								},
 								{
 									name: 'cases',
-									label: 'Total Cases',
-						
+									label: 'Total Cases'
 								},
 								{
 									name: 'todayCases',
-									label: 'Current Cases',
-						
+									label: 'Current Cases'
 								},
 								{
 									name: 'deaths',
-									label: 'Total Deaths',
-							
+									label: 'Total Deaths'
 								},
 								{
 									name: 'todayDeaths',
-									label: 'Current Deaths',
-							
+									label: 'Current Deaths'
 								},
 								{
 									name: 'recovered',
-									label: 'Recovered Patients',
-								
-									
+									label: 'Recovered Patients'
 								},
 								{
 									name: 'active',
-									label: 'Active Cases',
-							
+									label: 'Active Cases'
 								},
 								{
 									name: 'critical',
-									label: 'Critical Patients',
-							
+									label: 'Critical Patients'
 								}
 							]}
 							data={this.state.stats}
@@ -111,13 +101,14 @@ class WorldTable extends React.Component {
 								filter: true,
 
 								rowHover: true,
-								downloadOptions: { filename: 'CovidData.csv', separator: ',' },
+								downloadOptions: { filename: 'CustomDownload.csv', separator: ',' },
 								filterType: 'dropdown',
 								selectableRows: true,
 								responsive: 'stacked',
 								tableBodyHeight: '300px',
-						
-								rowsPerPageOptions: [ 5,10,50]
+								draggableColumns: { enabled: true, transitionTime: 300 },
+								rowsPerPageOptions: [ 5, 10, 50 ],
+								rowsPerPage: 5
 							}}
 						/>
 					</MuiThemeProvider>

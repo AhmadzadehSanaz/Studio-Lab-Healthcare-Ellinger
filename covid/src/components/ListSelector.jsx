@@ -53,7 +53,7 @@ export default function TransferList(props){
 
 
 
-console.log(props.dataProps,'listselector')
+console.log(props.dataProps.features,'listselector')
   //getting the first object from geojson to extract column names
   
   let dataPopulator=props.dataProps.features;
