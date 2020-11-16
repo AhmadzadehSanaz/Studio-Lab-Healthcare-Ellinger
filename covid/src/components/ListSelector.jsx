@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		margin: theme.spacing(0.5, 1.5)
-	},MuiListItem:{
-    padding:'2px'
-  }
+	},
+	MuiListItem: {
+		padding: '2px'
+	}
 }));
 
 function not(a, b){
@@ -48,25 +49,26 @@ function union(a, b){
 }
 
 export default function TransferList(props){
-  var listItems;
-  
+	var listItems;
 
+	//getting the first object from geojson to extract column names
 
+	let dataPopulator = props.dataProps.features;
+	if (dataPopulator !== null) {
+		for (var key in dataPopulator) {
+			if (dataPopulator.hasOwnProperty(key)) {
+				let firstProp = dataPopulator[key];
+				listItems = Object.keys(firstProp.properties);
+				console.log(
+					firstProp.properties.divvy_bike_stations_within_halfmile_per_cell,
+					'reza'
+				);
 
-console.log(props.dataProps.features,'listselector')
-  //getting the first object from geojson to extract column names
-  
-  let dataPopulator=props.dataProps.features;
-  if(dataPopulator !== null){
-	for (var key in dataPopulator) {
-		if (dataPopulator.hasOwnProperty(key)) {
-			let firstProp = dataPopulator[key];
-			listItems = Object.keys(firstProp.properties);
-
-			break;
+				break;
+			}
 		}
-	}}
-
+	}
+	console.log(listItems, 'karim');
 	const classes = useStyles();
 	const [ checked, setChecked ] = React.useState([]);
 	const [ left, setLeft ] = React.useState(listItems);
@@ -163,28 +165,31 @@ console.log(props.dataProps.features,'listselector')
 				spacing={0}
 				justify='center'
 				alignItems='center'
-				className={classes.root}>
+				className={classes.root}
+			>
 				<Grid item>{customList('Features', left)}</Grid>
 				<Grid item>
 					<Grid container direction='column' alignItems='center' justify='space-between'>
 						<Button
-              variant='contained'
-              color="primary"
+							variant='contained'
+							color='primary'
 							size='small'
 							className={classes.button}
 							onClick={handleCheckedRight}
 							disabled={leftChecked.length === 0}
-							aria-label='move selected right'>
+							aria-label='move selected right'
+						>
 							&gt;
 						</Button>
 						<Button
-              variant='contained'
-              color="primary"
+							variant='contained'
+							color='primary'
 							size='small'
 							className={classes.button}
 							onClick={handleCheckedLeft}
 							disabled={rightChecked.length === 0}
-							aria-label='move selected left'>
+							aria-label='move selected left'
+						>
 							&lt;
 						</Button>
 					</Grid>

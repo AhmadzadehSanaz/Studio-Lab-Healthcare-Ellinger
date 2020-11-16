@@ -17,7 +17,7 @@ import axios from 'axios';
 function Covid19(){
 	//Fetching data
 	const fetchUrl =
-		'https://cdn.glitch.com/ee654f05-3254-4edf-9144-7a785e41da36%2FmainData.geojson?v=1605449405761';
+		'https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson';
 
 	const [ data, setData ] = useState(null);
 	async function getData(){
@@ -57,12 +57,17 @@ function Covid19(){
 						</span>
 					</div>
 
-					{/*  ------------------ Empty Container ------------------ */}
+					{/*  ------------------ Sidebar Dash ------------------ */}
 
-					<div className='sidebarDash'>side bar dash</div>
+					<div className='sidebarDash'>
+						{' '}
+						<ListBrowser />{' '}
+					</div>
 
 					{/* ------------------ Empty Container ------------------ */}
-					<div className='content1'>Content 1</div>
+					<div className='content1'>
+						<h6 style={{ color: 'red' }}> Hello</h6>{' '}
+					</div>
 
 					{/*  ------------------ Map Preview ------------------ */}
 

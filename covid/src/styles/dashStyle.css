@@ -32,7 +32,7 @@ body {
     height: 150vh;
     width: 100wh;
     grid-template-columns: 0.5fr 1fr minmax(400px, auto) 1fr 1fr 0.5fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 360px);
+    grid-template-rows: 0.5fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 360px);
     grid-template-areas: "nav nav nav nav nav nav"/*Nav */
     "content1 content1 content1 content1 main main"/*Content 4    Map */
     "sidebar content2 content3 content3 main main"/*Content 4    Map */
@@ -41,7 +41,7 @@ body {
     "sidebar content8 content8 content5 content5 content5"/*Content 4    Map */
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     ;
-    grid-gap: 0.5rem;
+    grid-gap: 1rem;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 12px;
