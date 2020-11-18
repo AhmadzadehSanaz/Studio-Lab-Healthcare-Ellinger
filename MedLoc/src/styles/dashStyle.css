@@ -15,6 +15,7 @@
 :root {
     --main-radius: 5px;
     --main-padding: 5px;
+    background: #2c698d;
 }
 
 * {
@@ -25,48 +26,50 @@
 
 body {
     font-family: "Inter", sans-serif;
+    background: #f1f1f1;
 }
 
 .containerDash {
     display: grid;
-    height: 150vh;
-    width: 100wh;
-    grid-template-columns: 0.5fr 1fr minmax(400px, auto) 1fr 1fr 0.5fr;
-    grid-template-rows: 0.5fr 1fr 1fr 1fr minmax(220px, 320px) 1fr minmax(300px, 360px);
+    height: 100vh;
+    grid-template-columns: 0.5fr 1fr 1fr 0.7fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.6fr 1fr 1fr 0.2fr 1fr 1fr;
     grid-template-areas: "nav nav nav nav nav nav"/*Nav */
-    "content1 content1 content1 content1 main main"/*Content 4    Map */
-    "sidebar content2 content3 content3 main main"/*Content 4    Map */
-    "sidebar content2 content3 content3 main main"/*Content 4    Map */
-    "sidebar content4 content4 content5 content5 content5"/*Sidebar  ListSelector    Map */
-    "sidebar content8 content8 content5 content5 content5"/*Content 4    Map */
+    "sidebar content4 content4 main main main"/*Content 4    Map */
+    "sidebar content4 content4 content8 content5 content5 "/*Content 4    Map */
+    "sidebar content4 content4 content8 content5 content5"/*Content 4    Map */
+    "sidebar content7 content7 content8 content5 content5"/*Sidebar  ListSelector    Map */
+    "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     ;
     grid-gap: 1rem;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 12px;
-    color: #004d40;
+    color: #383838;
     text-align: center;
+    background: #d3d3d3;
     padding: 10px;
-    margin: 5px;
+}
+
+.generalComp {
+    background: #ececec;
 }
 
 .navDash {
-    background: #a7ffeb;
+    background: none;
     grid-area: nav;
-    border-radius: var(--main-radius);
     padding-top: var(--main-padding);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 .mainDash {
     grid-area: main;
     height: 100%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #f4f4ff;
 }
 
 .sidebarDash {
-    background: #18ffff;
     grid-area: sidebar;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
@@ -74,7 +77,6 @@ body {
 }
 
 .content1 {
-    background: #6fffd2;
     grid-area: content1;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
@@ -82,7 +84,6 @@ body {
 }
 
 .content2 {
-    background: 'red';
     grid-area: content2;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
@@ -90,7 +91,6 @@ body {
 }
 
 .content3 {
-    background: #f4f4f4;
     grid-area: content3;
     border-radius: var(--main-radius);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -106,14 +106,12 @@ body {
 }
 
 .content5 {
-    background: #f4f4f4;
     grid-area: content5;
     border-radius: var(--main-radius);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .content6 {
-    background: #80121b;
     grid-area: content6;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
@@ -121,7 +119,6 @@ body {
 }
 
 .content7 {
-    background: #80121b;
     grid-area: content7;
     height: '100%';
     overflow: auto;
@@ -132,7 +129,6 @@ body {
 }
 
 .content8 {
-    background: #e78c93;
     grid-area: content8;
     height: '100%';
     overflow: auto;
@@ -160,7 +156,7 @@ a {
     } */
 
 
-/* 
+/*
 
 
 

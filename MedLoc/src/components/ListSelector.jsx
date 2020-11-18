@@ -13,6 +13,8 @@ import Divider from '@material-ui/core/Divider';
 import { features as dummyDataList } from '../data/mainData.json';
 import dataTest from '../data/mainData.json';
 import Typography from '@material-ui/core/Typography';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,15 +26,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 	list: {
 		width: 320,
-		height: '200px',
+		height: '300px',
 		backgroundColor: theme.palette.background.paper,
 		overflow: 'auto'
 	},
 	button: {
-		margin: theme.spacing(0.5, 1.5)
+		margin: theme.spacing(1, 1.5)
 	},
 	MuiListItem: {
-		padding: '2px'
+		padding: '0px',
+		margin: 0
 	}
 }));
 
@@ -163,13 +166,14 @@ export default function TransferList(props){
 			<Grid
 				container
 				spacing={0}
-				justify='center'
-				alignItems='center'
+				justify='space-around'
+				alignItems='left'
+				alignContent='left'
 				className={classes.root}
 			>
 				<Grid item>{customList('Features', left)}</Grid>
 				<Grid item>
-					<Grid container direction='column' alignItems='center' justify='space-between'>
+					<Grid container direction='row' alignItems='left'>
 						<Button
 							variant='contained'
 							color='primary'
@@ -179,7 +183,7 @@ export default function TransferList(props){
 							disabled={leftChecked.length === 0}
 							aria-label='move selected right'
 						>
-							&gt;
+							<ExpandMoreIcon />
 						</Button>
 						<Button
 							variant='contained'
@@ -190,7 +194,7 @@ export default function TransferList(props){
 							disabled={rightChecked.length === 0}
 							aria-label='move selected left'
 						>
-							&lt;
+							<ExpandLessIcon />
 						</Button>
 					</Grid>
 				</Grid>

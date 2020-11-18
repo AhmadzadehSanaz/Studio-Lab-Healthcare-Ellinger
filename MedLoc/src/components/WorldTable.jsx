@@ -59,7 +59,7 @@ class WorldTable extends React.Component {
 					<MuiThemeProvider theme={this.getMuiTheme()}>
 						<MUIDataTable
 							title={
-								<h6 style={{ float: 'left', color: '#3f51b5' }}>Data Explorer</h6>
+								<h6 style={{ float: 'left', color: '#383838' }}>Data Explorer</h6>
 							}
 							isLoading={this.state.loading}
 							columns={[

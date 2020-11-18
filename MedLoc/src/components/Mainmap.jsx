@@ -1,10 +1,11 @@
 /* eslint-disable no-unreachable */
 import React, { useState, useEffect } from 'react';
 import { Map, GeoJSON, TileLayer, LayersControl } from 'react-leaflet';
+import Legend from './Legend';
 
 import { features } from '../data/bound';
 import axios from 'axios';
-function Covidmap(props){
+function Mainmap(props){
 	//getting the first object from geojson to extract column names
 
 	let dataPopulator = props.dataProps.features;
@@ -65,7 +66,8 @@ function Covidmap(props){
 	};
 
 	return (
-		<Map center={center} zoom={10} style={{ height: '100%', width: '100%' }}>
+		<Map center={center} zoom={10} style={{ height: '93%', width: '100%' }}>
+			<Legend />
 			<LayersControl position='topright'>
 				<BaseLayer checked name='OSM'>
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
@@ -78,4 +80,4 @@ function Covidmap(props){
 		</Map>
 	);
 }
-export default Covidmap;
+export default Mainmap;

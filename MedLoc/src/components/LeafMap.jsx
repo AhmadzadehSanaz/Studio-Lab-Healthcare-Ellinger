@@ -3,7 +3,7 @@ import L from 'leaflet';
 import MarkerCluster from 'leaflet.markercluster';
 import LeafletDraw from 'leaflet-draw';
 import LeafletHeat from 'leaflet.heat';
-
+import Legend from './Legend';
 const Map = (props) => {
 	const mapRef = useRef(null);
 	const geojsonLayer = React.useRef(null);

@@ -1,9 +1,9 @@
-import Covid19 from './components/Covid19';
+import DashApp from './components/DashApp';
 
 function App(){
 	return (
 		<div>
-			<Covid19 />
+			<DashApp />
 		</div>
 	);
 }
