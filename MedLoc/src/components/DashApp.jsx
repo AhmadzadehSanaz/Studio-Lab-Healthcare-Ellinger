@@ -1,32 +1,31 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-// import 'react-resizable/css/styles.css';
+
 import axios from 'axios';
 import '../styles/dashStyle.css';
 
 //Components
-import WorldTable from './WorldTable';
-import Mainmap from './Mainmap';
-import Viz from './Viz';
-import Vizz from './Vizz';
-import ListBrowser from './ListBrowser';
-import LeafMap from './LeafMap';
-import ListSelector from './ListSelector';
-import Loading from './Loading';
-import Navbar from './Navbar';
-import PreviewMap from './PreviewMap';
-import Synthesizer from './Synthesizer';
-import MLSetup from './MLSetup';
-import PieViz from './PieViz';
-import MapTry from './MapTry';
+import WorldTable from './Data/WorldTable';
+import Mainmap from './Maps/Mainmap';
+import Viz from './Data/Viz';
+import Vizz from './Data/Vizz';
 
-function DashApp(){
+import LeafMap from './Maps/LeafMap';
+import ListSelector from './Controls/ListSelector';
+import Loading from './Loading';
+import Navbar from './Interface/Navbar';
+import PreviewMap from './Maps/PreviewMap';
+import Synthesizer from './Controls/Synthesizer';
+import MLSetup from './Controls/MLSetup';
+import PieViz from './Data/PieViz';
+
+function DashApp (){
 	//Fetching data
 	const fetchUrl =
-		'https://cdn.glitch.com/ee654f05-3254-4edf-9144-7a785e41da36%2FmainData.geojson?v=1605449405761';
+		'https://raw.githubusercontent.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/main/Data%20Pipeline/hexagon_collection_master.geojson';
 
 	const [ data, setData ] = useState(null);
-	async function getData(){
+	async function getData (){
 		axios
 			.get(fetchUrl)
 			.then((res) => {
@@ -91,8 +90,7 @@ function DashApp(){
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							alignContent: 'center'
-						}}
-					>
+						}}>
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
 							<Viz />
 						</div>
@@ -121,8 +119,7 @@ function DashApp(){
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center'
-					}}
-				>
+					}}>
 					<Loading />
 				</div>}
 		</div>

@@ -1,6 +1,7 @@
 import DashApp from './components/DashApp';
+import 'leaflet/dist/leaflet.css';
 
-function App(){
+function App (){
 	return (
 		<div>
 			<DashApp />
