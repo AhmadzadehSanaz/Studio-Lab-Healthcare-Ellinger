@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import axios from 'axios';
 import '../styles/dashStyle.css';
@@ -7,17 +6,13 @@ import '../styles/dashStyle.css';
 //Components
 import WorldTable from './Data/WorldTable';
 import Mainmap from './Maps/Mainmap';
-import Viz from './Data/Viz';
-import Vizz from './Data/Vizz';
 
-import LeafMap from './Maps/LeafMap';
 import ListSelector from './Controls/ListSelector';
 import Loading from './Loading';
 import Navbar from './Interface/Navbar';
 import PreviewMap from './Maps/PreviewMap';
 import Synthesizer from './Controls/Synthesizer';
 import MLSetup from './Controls/MLSetup';
-import PieViz from './Data/PieViz';
 
 function DashApp (){
 	//Fetching data
@@ -91,15 +86,9 @@ function DashApp (){
 							alignItems: 'center',
 							alignContent: 'center'
 						}}>
-						<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
-							<Viz />
-						</div>
-						<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
-							<Vizz />
-						</div>
-						<div style={{ height: '100%', width: '33%', flexGrow: '1' }}>
-							<PieViz />
-						</div>
+						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
+						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
+						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 					</div>
 
 					{/* ------------------ Machine Learning Control ------------------*/}
