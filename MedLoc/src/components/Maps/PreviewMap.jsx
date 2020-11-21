@@ -1,8 +1,10 @@
 /* eslint-disable no-unreachable */
 import React, { useState, useEffect } from 'react';
-import { Map, GeoJSON, TileLayer, LayersControl } from 'react-leaflet';
+import { Map, GeoJSON, TileLayer, LayersControl, AttributionControl } from 'react-leaflet';
+import Legend from './Legend';
+import HighlightedGeoJson from './HighlightedGeoJson';
+import * as d3 from 'd3';
 
-import axios from 'axios';
 function PreviewMap (props){
 	//getting the first object from geojson to extract column names
 
@@ -13,58 +15,54 @@ function PreviewMap (props){
 			if (dataPopulator.hasOwnProperty(key)) {
 				let firstProp = dataPopulator[key];
 				let listItems = Object.keys(firstProp.properties);
-				let listValue = Object.values(firstProp.properties);
-				console.log(props.dataProps.features[0].properties, 'hamid');
+				// let listValue = Object.values(firstProp.properties);
+
 				break;
 			}
 		}
 	}
 
-	function getColor (d){
-		var color;
-		if (d > 1000) {
-			color = '#800026';
-		} else if (d > 500) {
-			color = '#BD0026';
-		} else if (d > 200) {
-			color = '#E31A1C';
-		} else if (d > 100) {
-			color = '#FC4E2A';
-		} else if (d > 50) {
-			color = '##FD8D3C';
-		} else color = '##FEB24C';
-		return color;
-	}
-	function style (dataPopulator){
+	// console.log(`${props.userSelectedItems[props.userSelectedItems.length - 1]}`, 'im in map');
+
+	let columnName = props.userSelectedItems;
+	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
+
+	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ 'coral', 'blue' ]);
+	console.log(d3.extent(columnValues));
+
+	let colorScaleQuant = d3
+		.scaleQuantize()
+		.domain([ 20, 200, 400, 800 ])
+		.range([ 'coral', 'green', 'blue', 'yellow', 'blue' ]);
+
+	function styles (feature){
 		return {
-			fillColor: getColor(dataPopulator.properties.density),
-			weight: 2,
+			fillColor: colorScale(feature.properties[columnName]),
+
+			weight: 0,
 			opacity: 1,
 			color: 'white',
 			dashArray: '3',
-			fillOpacity: 0.7
+			fillOpacity: 1
 		};
 	}
-	const mapStyle = {
-		fillColor: 'white',
-		weight: 1,
-		color: 'black',
-		fillOpacity: 1
-	};
+
 	const { BaseLayer, Overlay } = LayersControl;
 
 	const center = [ 41.8781, -87.6298 ];
 
 	const onEachHex = (hex, layer) => {
-		layer.options.fillColor = 'red';
-		// 	country.properties.color;
-		const name = hex.properties.top;
-		// const confirmedText = hex.properties.confirmedText;
-		layer.bindPopup(` no_of_people_no_health_insurance_sum, ${name}`);
+		const name = hex.properties[columnName];
+
+		layer.bindPopup(` ${columnName}, ${name}`);
 	};
 
 	return (
-		<Map center={center} zoom={10} style={{ height: '93%', width: '100%' }}>
+		<Map
+			attributionControl={false}
+			center={center}
+			zoom={10}
+			style={{ height: '93%', width: '100%' }}>
 			<LayersControl position='topright'>
 				<BaseLayer checked name='OSM'>
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
@@ -72,8 +70,10 @@ function PreviewMap (props){
 				<BaseLayer name='MapBox'>
 					<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
 				</BaseLayer>
-				<GeoJSON data={props.dataProps} style={mapStyle} onEachFeature={onEachHex} />
 			</LayersControl>
+			<GeoJSON data={props.dataProps} style={styles} onEachFeature={onEachHex} />
+			{/* <HighlightedGeoJson passData={props.dataProps} /> */}
+			<Legend />
 		</Map>
 	);
 }

@@ -2,12 +2,12 @@ import { MapControl, withLeaflet } from 'react-leaflet';
 import L from 'leaflet';
 
 class Legend extends MapControl {
-	createLeafletElement(props) {}
+	createLeafletElement (props) {}
 
-	componentDidMount() {
+	componentDidMount () {
 		// get color depending on population density value
 
-		function getColor(d){
+		function getColor (d){
 			var color;
 			if (d > 1000) {
 				color = '#800026';
@@ -23,11 +23,23 @@ class Legend extends MapControl {
 			return color;
 		}
 
+		console.log(this.props.legendValues, 'zeinab');
+		function split (left, right, parts){
+			var result = [],
+				delta = (right - left) / (parts - 1);
+			while (left < right) {
+				result.push(left);
+				left += delta;
+			}
+			result.push(right);
+			return result;
+		}
+
 		const legend = L.control({ position: 'bottomleft' });
 
 		legend.onAdd = () => {
 			const div = L.DomUtil.create('div', 'info legend');
-			const grades = [ 0, 10, 20, 50, 100, 200, 500, 1000 ];
+			const grades = [ 0, 10, 20, 50, 100, 200, 500, 3000 ];
 			let labels = [];
 			let from;
 			let to;
@@ -35,7 +47,7 @@ class Legend extends MapControl {
 			for (let i = 0; i < grades.length; i++) {
 				from = grades[i];
 				to = grades[i + 1];
-				console.log(getColor(from + 1), 'Kambiz');
+
 				labels.push(
 					'<i style="background:' +
 						getColor(from + 1) +

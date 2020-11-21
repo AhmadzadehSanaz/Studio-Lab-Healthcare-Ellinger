@@ -42,7 +42,7 @@ body {
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     ;
-    grid-gap: 1rem;
+    grid-gap: 0.8rem;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 12px;
@@ -73,7 +73,7 @@ body {
     grid-area: sidebar;
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);
-    width: 320px;
+    width: 310px;
     overflow-y: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

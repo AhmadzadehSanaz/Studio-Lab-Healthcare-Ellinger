@@ -10,22 +10,21 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { features as dummyDataList } from '../../data/mainData.json';
-import dataTest from '../../data/mainData.json';
+
 import Typography from '@material-ui/core/Typography';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		margin: '5px'
+		margin: '0px',
+		padding: '5px'
 	},
 	cardHeader: {
 		padding: theme.spacing(1, 2)
 	},
 	list: {
-		width: 320,
+		width: 300,
 		height: '300px',
 		backgroundColor: theme.palette.background.paper,
 		overflow: 'auto'
@@ -57,30 +56,47 @@ export default function TransferList (props){
 	//getting the first object from geojson to extract column names
 
 	let dataPopulator = props.dataProps.features;
+
 	if (dataPopulator !== null) {
 		for (var key in dataPopulator) {
 			if (dataPopulator.hasOwnProperty(key)) {
 				let firstProp = dataPopulator[key];
 				listItems = Object.keys(firstProp.properties);
-				console.log(
-					firstProp.properties.divvy_bike_stations_within_halfmile_per_cell,
-					'reza'
-				);
 
 				break;
 			}
 		}
 	}
-	console.log(listItems, 'karim');
+	//Replacing _ with space for better display
+	let listItemsCleaned = listItems.map((item) => item.replace(/_/g, ' '));
+
 	const classes = useStyles();
 	const [ checked, setChecked ] = React.useState([]);
-	const [ left, setLeft ] = React.useState(listItems);
+	const [ left, setLeft ] = React.useState(listItemsCleaned.reverse());
 	const [ right, setRight ] = React.useState([]);
 
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
 
+	//Passing to top
+
 	const handleToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [ ...checked ];
+
+		if (currentIndex === -1) {
+			props.methodProps(value);
+
+			// console.log(value, 'im in click');
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
+
+		setChecked(newChecked);
+	};
+
+	const handleToggleSelected = (value) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [ ...checked ];
 
@@ -156,6 +172,51 @@ export default function TransferList (props){
 			</List>
 		</Card>
 	);
+	const customListSelected = (title, items) => (
+		<Card>
+			<CardHeader
+				className={classes.cardHeader}
+				avatar={
+					<Checkbox
+						onClick={handleToggleAll(items)}
+						checked={numberOfChecked(items) === items.length && items.length !== 0}
+						indeterminate={
+							numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
+						}
+						disabled={items.length === 0}
+						inputProps={{ 'aria-label': 'all items selected' }}
+					/>
+				}
+				title={title}
+				subheader={`${numberOfChecked(items)}/${items.length} selected`}
+			/>
+			<Divider />
+			<List className={classes.list} dense={true} component='div' role='list'>
+				{items.map((value) => {
+					const labelId = `transfer-list-all-item-${value}-label`;
+
+					return (
+						<ListItem
+							key={value}
+							role='listitem'
+							button
+							onClick={handleToggleSelected(value)}>
+							<ListItemIcon>
+								<Checkbox
+									checked={checked.indexOf(value) !== -1}
+									tabIndex={-1}
+									disableRipple
+									inputProps={{ 'aria-labelledby': labelId }}
+								/>
+							</ListItemIcon>
+							<ListItemText id={labelId} primary={`${value}`} />
+						</ListItem>
+					);
+				})}
+				<ListItem />
+			</List>
+		</Card>
+	);
 
 	return (
 		<React.Fragment>
@@ -166,13 +227,13 @@ export default function TransferList (props){
 			<Grid
 				container
 				spacing={0}
-				justify='space-around'
-				alignItems='left'
-				alignContent='left'
+				justify='center'
+				alignItems='center'
+				alignContent='center'
 				className={classes.root}>
 				<Grid item>{customList('Features', left)}</Grid>
 				<Grid item>
-					<Grid container direction='row' alignItems='left'>
+					<Grid container direction='row' alignItems='center'>
 						<Button
 							variant='contained'
 							color='primary'
@@ -195,7 +256,7 @@ export default function TransferList (props){
 						</Button>
 					</Grid>
 				</Grid>
-				<Grid item>{customList('Selected Features', right)}</Grid>
+				<Grid item>{customListSelected('Selected Features', right)}</Grid>
 			</Grid>
 		</React.Fragment>
 	);

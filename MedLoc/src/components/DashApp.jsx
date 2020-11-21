@@ -5,8 +5,10 @@ import '../styles/dashStyle.css';
 
 //Components
 import WorldTable from './Data/WorldTable';
-import Mainmap from './Maps/Mainmap';
+import WorldTable1 from './Data/WorldTable1';
 
+import Mainmap from './Maps/Mainmap';
+import LeafMap from './Maps/LeafMap';
 import ListSelector from './Controls/ListSelector';
 import Loading from './Loading';
 import Navbar from './Interface/Navbar';
@@ -34,7 +36,10 @@ function DashApp (){
 		getData();
 	}, []);
 
-	// //Getting parent componets refs to pass as prop div height to list componet for maxHeight argument
+	const [ userSelected, setUserSelected ] = useState();
+	const [ userClicked, setUserClicked ] = useState(false);
+
+	// //Getting parent components refs to pass as prop div height to list component for maxHeight argument
 	// const [ divHeight, setDivHeight ] = useState(null);
 	// const listDivRef = useRef(null);
 	// //Reading heigh after it's rendered
@@ -59,36 +64,37 @@ function DashApp (){
 					{/*  ------------------ Data Selector ------------------ */}
 
 					<div className='sidebarDash generalComp'>
-						<ListSelector dataProps={data} />
+						<ListSelector dataProps={data} methodProps={setUserSelected} />
 					</div>
 
 					{/*  ------------------ Map Preview ------------------*/}
 					<div className='content4 generalComp'>
 						<h6 style={{ margin: '5px' }}> Feature Preview </h6>
 						<span>
-							<PreviewMap dataProps={data} />
+							<PreviewMap
+								dataProps={data}
+								userSelectedItems={userSelected}
+								userClickedProp={userClicked}
+							/>
 						</span>
 					</div>
 					{/* ------------------ Main Map ------------------*/}
 					<div className='content5 generalComp'>
 						<h6 style={{ margin: '5px' }}> Model View </h6>
 						<span>
-							<Mainmap dataProps={data} />
+							<Mainmap
+								dataProps={data}
+								userSelectedItems={userSelected}
+								userClickedProp={userClicked}
+							/>
 						</span>
 					</div>
 
 					{/* ------------------ Mix Viz ------------------*/}
-					<div
-						className='content6 generalComp'
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							alignItems: 'center',
-							alignContent: 'center'
-						}}>
+					<div className='content6 generalComp'>
+						{/* <div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
-						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
-						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
+						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} /> */}
 					</div>
 
 					{/* ------------------ Machine Learning Control ------------------*/}
