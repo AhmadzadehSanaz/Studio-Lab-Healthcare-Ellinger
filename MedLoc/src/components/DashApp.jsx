@@ -5,10 +5,11 @@ import '../styles/dashStyle.css';
 
 //Components
 import WorldTable from './Data/WorldTable';
-import WorldTable1 from './Data/WorldTable1';
+
+//Visulisations
+import PieViz from './Data/PieViz';
 
 import Mainmap from './Maps/Mainmap';
-import LeafMap from './Maps/LeafMap';
 import ListSelector from './Controls/ListSelector';
 import Loading from './Loading';
 import Navbar from './Interface/Navbar';
@@ -22,6 +23,8 @@ function DashApp (){
 		'https://raw.githubusercontent.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/main/Data%20Pipeline/hexagon_collection_master.geojson';
 
 	const [ data, setData ] = useState(null);
+
+	const [ toggle, setToggle ] = useState(true);
 	async function getData (){
 		axios
 			.get(fetchUrl)
@@ -104,7 +107,14 @@ function DashApp (){
 
 					{/* ------------------ Data Table ------------------ */}
 					<div className='content7 generalComp'>
-						<WorldTable dataProps={data} />
+						{
+							toggle === false ? <div>
+								<WorldTable dataProps={data} />
+							</div> :
+							<div style={{ height: '100%' }}>
+								<PieViz />
+							</div>}
+						{/* <WorldTable dataProps={data} /> */}
 					</div>
 				</div> :
 				// Loading

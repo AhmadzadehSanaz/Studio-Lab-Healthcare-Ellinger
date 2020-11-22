@@ -85,7 +85,8 @@ export default function TransferList (props){
 		const newChecked = [ ...checked ];
 
 		if (currentIndex === -1) {
-			props.methodProps(value);
+			let fakeValue = value.replace(/ /g, '_');
+			props.methodProps(fakeValue);
 
 			// console.log(value, 'im in click');
 			newChecked.push(value);

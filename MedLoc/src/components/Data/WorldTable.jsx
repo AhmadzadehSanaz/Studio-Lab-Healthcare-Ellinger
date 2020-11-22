@@ -31,6 +31,11 @@ class WorldTable extends React.Component {
 						padding: '3px',
 						textAlign: 'center'
 					}
+				},
+				MUIDataTableToolbar: {
+					root: {
+						minHeight: '40px'
+					}
 				}
 			}
 		});
@@ -84,10 +89,10 @@ class WorldTable extends React.Component {
 								tableBodyHeight: '300px',
 								draggableColumns: { enabled: true, transitionTime: 300 },
 								rowsPerPageOptions: [ 5, 10, 50 ],
-								rowsPerPage: 5
+								rowsPerPage: 5,
+								viewColumns: true
 							}}
 						/>
-						<div>{console.log(this.state.dataState, 'zahra')}</div>
 					</MuiThemeProvider>
 				</div>
 			</React.Fragment>

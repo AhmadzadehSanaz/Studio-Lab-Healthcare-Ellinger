@@ -24,6 +24,7 @@ function Mainmap (props){
 
 	//Getting the values from the feature and defining color ranges
 	let columnName = props.userSelectedItems;
+	console.log(columnName, 'colname');
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
 	let legendValues = d3.extent(columnValues);
 	//Linear breaks
