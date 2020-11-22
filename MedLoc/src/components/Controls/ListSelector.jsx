@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
 		width: 300,
 		height: '300px',
 		backgroundColor: theme.palette.background.paper,
-		overflow: 'auto'
+		overflow: 'auto',
+		textTransform: 'capitalize'
 	},
 	button: {
 		margin: theme.spacing(1, 1.5)

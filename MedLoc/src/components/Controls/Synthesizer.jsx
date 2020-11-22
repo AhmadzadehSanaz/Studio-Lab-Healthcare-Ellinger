@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-function TabPanel(props){
+function TabPanel (props){
 	const { children, value, index, ...other } = props;
 
 	return (
@@ -17,11 +17,10 @@ function TabPanel(props){
 			hidden={value !== index}
 			id={`scrollable-auto-tabpanel-${index}`}
 			aria-labelledby={`scrollable-auto-tab-${index}`}
-			{...other}
-		>
+			{...other}>
 			{value === index && (
 				<Box m={1}>
-					<Typography style={{ textTransform: 'none' }} align='left' variant='h6'>
+					<Typography align='left' variant='h6'>
 						Iteration History: {children}
 					</Typography>
 				</Box>
@@ -36,7 +35,7 @@ TabPanel.propTypes = {
 	value: PropTypes.any.isRequired
 };
 
-function a11yProps(index){
+function a11yProps (index){
 	return {
 		id: `scrollable-auto-tab-${index}`,
 		'aria-controls': `scrollable-auto-tabpanel-${index}`
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Synthesizer(){
+export default function Synthesizer (){
 	const classes = useStyles();
 	const [ value, setValue ] = React.useState(0);
 
@@ -68,8 +67,7 @@ export default function Synthesizer(){
 					textColor='primary'
 					variant='scrollable'
 					scrollButtons='auto'
-					aria-label='scrollable auto tabs example'
-				>
+					aria-label='scrollable auto tabs example'>
 					<Tab label='Iteration One' {...a11yProps(0)} />
 					<Tab label='Iteration Two' {...a11yProps(1)} />
 					<Tab label='Iteration Three' {...a11yProps(2)} />

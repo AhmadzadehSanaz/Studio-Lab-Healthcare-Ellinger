@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '../styles/dashStyle.css';
 
-//Components
+//Data
 import WorldTable from './Data/WorldTable';
 
 //Visulisations
@@ -12,10 +12,12 @@ import PieViz from './Data/PieViz';
 import Mainmap from './Maps/Mainmap';
 import ListSelector from './Controls/ListSelector';
 import Loading from './Loading';
-import Navbar from './Interface/Navbar';
 import PreviewMap from './Maps/PreviewMap';
 import Synthesizer from './Controls/Synthesizer';
 import MLSetup from './Controls/MLSetup';
+
+import Toggle from './Interface/Toggle';
+import Navbar from './Interface/Navbar';
 
 function DashApp (){
 	//Fetching data
@@ -24,7 +26,6 @@ function DashApp (){
 
 	const [ data, setData ] = useState(null);
 
-	const [ toggle, setToggle ] = useState(true);
 	async function getData (){
 		axios
 			.get(fetchUrl)
@@ -41,6 +42,13 @@ function DashApp (){
 
 	const [ userSelected, setUserSelected ] = useState();
 	const [ userClicked, setUserClicked ] = useState(false);
+
+	const [ checkedMain, setCheckedMain ] = React.useState(false);
+	console.log(checkedMain, 'Main');
+
+	const toggleCheckedMain = () => {
+		setCheckedMain((prev) => !prev);
+	};
 
 	// //Getting parent components refs to pass as prop div height to list component for maxHeight argument
 	// const [ divHeight, setDivHeight ] = useState(null);
@@ -107,8 +115,13 @@ function DashApp (){
 
 					{/* ------------------ Data Table ------------------ */}
 					<div className='content7 generalComp'>
+						<Toggle
+							style={{ margin: '5px' }}
+							toggleProps={toggleCheckedMain}
+							checkedProps={checkedMain}
+						/>
 						{
-							toggle === false ? <div>
+							checkedMain === false ? <div>
 								<WorldTable dataProps={data} />
 							</div> :
 							<div style={{ height: '100%' }}>
