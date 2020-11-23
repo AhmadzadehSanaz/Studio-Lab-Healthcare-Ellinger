@@ -54,7 +54,7 @@ function Mainmap (props){
 	//Map center on load
 	const center = [ 41.8781, -87.6298 ];
 
-	// WIP Section start ____________________________________
+	// WIP Section start ____________________________________ useCallback?
 
 	//Pop up binding it has to be updated based on each change [useEffect?] WIP
 

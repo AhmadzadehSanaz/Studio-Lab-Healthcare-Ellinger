@@ -166,6 +166,16 @@ function DashApp (){
 
 					{/* ------------------ Mix Viz ------------------*/}
 					<div className='content6 generalComp'>
+						<iframe
+							src='https://public.domo.com/cards/bWxVg'
+							width='100%'
+							height='600'
+							align='center'
+							marginheight='0'
+							marginwidth='0'
+							frameborder='0'
+						/>
+
 						{/* <div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} /> */}
