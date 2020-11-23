@@ -43,8 +43,6 @@ class WorldTable extends React.Component {
 	componentDidMount () {
 		this.setState({ loading: true });
 
-		// this.setState({ stats: this.props.dataProps.features, loading: false });
-
 		let listItems = [];
 		let dataItems = [];
 		let dataPopulator = this.props.dataProps.features;

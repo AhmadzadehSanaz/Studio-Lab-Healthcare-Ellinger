@@ -28,7 +28,6 @@ function PreviewMap (props){
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
 
 	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ 'coral', 'blue' ]);
-	console.log(d3.extent(columnValues));
 
 	let colorScaleQuant = d3
 		.scaleQuantize()
@@ -62,13 +61,13 @@ function PreviewMap (props){
 			attributionControl={false}
 			center={center}
 			zoom={10}
-			style={{ height: '93%', width: '100%' }}>
+			style={{ height: '95%', width: '100%' }}>
 			<LayersControl position='topright'>
-				<BaseLayer checked name='OSM'>
-					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-				</BaseLayer>
-				<BaseLayer name='MapBox'>
+				<BaseLayer checked name='MapBox'>
 					<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
+				</BaseLayer>
+				<BaseLayer name='OSM'>
+					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 				</BaseLayer>
 			</LayersControl>
 			<GeoJSON data={props.dataProps} style={styles} onEachFeature={onEachHex} />

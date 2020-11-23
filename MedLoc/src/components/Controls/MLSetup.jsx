@@ -18,38 +18,17 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function SimpleSelect(){
+export default function SimpleSelect (props){
 	const classes = useStyles();
-	const [ age, setAge ] = React.useState('');
+	const [ cluster, setCluster ] = React.useState('');
 
 	const handleChange = (event) => {
-		setAge(event.target.value);
+		setCluster(event.target.value);
 	};
-
+	props.setClusterNumProp(cluster);
 	return (
 		<div>
 			<Grid container direction='column' alignItems='center' justify='space-around'>
-				<FormControl className={classes.formControl}>
-					<InputLabel shrink id='demo-simple-select-placeholder-label-label'>
-						Model type
-					</InputLabel>
-					<Select
-						labelId='demo-simple-select-placeholder-label-label'
-						id='demo-simple-select-placeholder-label'
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						className={classes.selectEmpty}
-					>
-						<MenuItem value=''>
-							<em>Select...</em>
-						</MenuItem>
-						<MenuItem value={11}>K-Means</MenuItem>
-						<MenuItem value={22}>Linear Regression</MenuItem>
-						<MenuItem value={33}>Random Forest</MenuItem>
-					</Select>
-					<FormHelperText>Choose th ML model</FormHelperText>
-				</FormControl>
 				<FormControl className={classes.formControl}>
 					<InputLabel shrink id='demo-simple-select-placeholder-label-label'>
 						Clusters
@@ -57,11 +36,10 @@ export default function SimpleSelect(){
 					<Select
 						labelId='demo-simple-select-placeholder-label-label'
 						id='demo-simple-select-placeholder-label'
-						value={age}
+						value={cluster}
 						onChange={handleChange}
 						displayEmpty
-						className={classes.selectEmpty}
-					>
+						className={classes.selectEmpty}>
 						<MenuItem value=''>
 							<em>Select...</em>
 						</MenuItem>

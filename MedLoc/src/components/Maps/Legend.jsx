@@ -23,7 +23,7 @@ class Legend extends MapControl {
 			return color;
 		}
 
-		console.log(this.props.legendValues, 'zeinab');
+		// console.log(this.props.legendValues, 'zeinab');
 		function split (left, right, parts){
 			var result = [],
 				delta = (right - left) / (parts - 1);

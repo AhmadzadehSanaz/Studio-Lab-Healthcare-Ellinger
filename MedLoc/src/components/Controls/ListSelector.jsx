@@ -79,7 +79,9 @@ export default function TransferList (props){
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
 
-	//Passing to top
+	//
+	//Passing  selected features to parent component using props
+	props.featureProps(right);
 
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -87,9 +89,9 @@ export default function TransferList (props){
 
 		if (currentIndex === -1) {
 			let fakeValue = value.replace(/ /g, '_');
+			// Passing prettified feature names to be displayed in the list
 			props.methodProps(fakeValue);
 
-			// console.log(value, 'im in click');
 			newChecked.push(value);
 		} else {
 			newChecked.splice(currentIndex, 1);

@@ -22,9 +22,8 @@ const Map = (props) => {
 		}
 	}
 	// console.log(`${props.userSelectedItems[props.userSelectedItems.length - 1]}`, 'im in map');
-	console.log(typeof props.userSelectedItems, 'im in map');
+	// console.log(typeof props.userSelectedItems, 'im in map');
 	let mamad = String(props.userSelectedItems);
-	console.log(mamad, 'mamad');
 	let columnName = props.userSelectedItems;
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
 

@@ -24,7 +24,7 @@ function Mainmap (props){
 
 	//Getting the values from the feature and defining color ranges
 	let columnName = props.userSelectedItems;
-	console.log(columnName, 'colname');
+	// console.log(columnName, 'colname');
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
 	let legendValues = d3.extent(columnValues);
 	//Linear breaks
@@ -34,6 +34,7 @@ function Mainmap (props){
 		.scaleQuantize()
 		.domain([ 20, 200, 400, 800 ])
 		.range([ 'coral', 'green', 'blue', 'yellow', 'blue' ]);
+
 	//Coloring each feature based on the user selected values from the list selector
 	function styles (feature){
 		return {
@@ -53,19 +54,35 @@ function Mainmap (props){
 	//Map center on load
 	const center = [ 41.8781, -87.6298 ];
 
-	//Pop up binding it has to be updated based on each change [useEffect?] WIP
-	const onEachHex = (hex, layer) => {
-		const name = hex.properties[columnName];
+	// WIP Section start ____________________________________
 
-		layer.bindPopup(` ${columnName}, ${name}`);
+	//Pop up binding it has to be updated based on each change [useEffect?] WIP
+
+	const [ hookCol, setHookCol ] = useState(columnName);
+
+	useEffect(
+		() => {
+			if (columnName !== undefined) {
+				onEachHex();
+				setHookCol(columnName);
+				console.log('useEffect', columnName);
+			}
+		},
+		[ columnName ]
+	);
+	const onEachHex = (hex, layer) => {
+		// const name = hex.properties[columnName];
+		console.log(hookCol, 'hook');
+		layer.bindPopup(` ${hookCol}`);
 	};
+	// WIP Section end ____________________________________
 
 	return (
 		<Map
 			attributionControl={false}
 			center={center}
 			zoom={10}
-			style={{ height: '93%', width: '100%' }}>
+			style={{ height: '95%', width: '100%' }}>
 			<LayersControl position='topright'>
 				<BaseLayer checked name='OSM'>
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
