@@ -6,6 +6,11 @@ import json
 #Github URL for testing
 github_url = "https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson"
 
+'''
+Function to get all the data from the github repo
+and prepare it, by cleaning categorical data from 
+it and eliminating part of the geolocation data
+'''
 def get_data(url):
     #Get main data file from Github Repo
     github_request = requests.get(url)

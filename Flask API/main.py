@@ -7,7 +7,7 @@ import json
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
 from github_data_edit import get_data
-from kmeans_clustering import cluster_generator
+import kmeans_clustering as km
 
 #Creation of the Flask Application
 app = Flask(__name__)
@@ -21,6 +21,7 @@ cluster_post_arguments.add_argument("number of clusters", type=int)
 
 class MedLocAPI(Resource):
 
+    '''Not in use'''
     def get(self):
         github_url = "https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson"
         data = get_data(github_url)
@@ -31,7 +32,8 @@ class MedLocAPI(Resource):
         data = arguments['data']
         selected_attributes = arguments['selected features']
         number_of_cluster = arguments['number of clusters']
-        cluster_data =cluster_generator(data, selected_attributes, number_of_cluster)
+        cluster_data = km.cluster_generator(data, selected_attributes, number_of_cluster)
+        km.boxplot_generator_subplot(cluster_data[1], selected_attributes)
         return cluster_data[0]
 
 api.add_resource(MedLocAPI, "/cluster")
