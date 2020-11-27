@@ -17,7 +17,7 @@ export default function Runbutton (props){
 		<div>
 			{/* This Button uses a Font Icon, see the installation instructions in the Icon component docs. */}
 			<Button
-				onClick={() => props.userSubmit()}
+				onClick={props.propsOnClick}
 				variant='contained'
 				color='primary'
 				className={classes.button}

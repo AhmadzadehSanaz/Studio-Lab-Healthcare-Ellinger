@@ -53,7 +53,7 @@ function DashApp (){
 		getData();
 	}, []);
 
-	// State for getting user selected feture which will be passed to maps
+	// State for getting user selected feature which will be passed to maps
 	const [ userSelected, setUserSelected ] = useState();
 
 	// state for maps
@@ -67,14 +67,19 @@ function DashApp (){
 
 	// State for getting number of clusters
 
-	const [ clusterNum, setClusterNum ] = useState(null);
-
 	// Sate for getting features user selected for running the model
 	const [ userFeatures, setUserFeatures ] = useState(null);
-	let userFeaturesOriginal = null;
-	if (userFeatures !== null) {
-		userFeaturesOriginal = userFeatures.map((feature) => feature.replace(/ /g, '_'));
-	}
+
+	// let userFeaturesOriginal = [];
+	// if (userFeatures !== null) {
+	// 	userFeaturesOriginal = userFeatures.map((feature) => feature.replace(/ /g, '_'));
+	// }
+
+	// const [ columnTable, setColumnTable ] = useState([]);
+	// let columnValues = [];
+
+	// setColumnTable(columnValues);
+	// console.log(columnValues, 'app');
 
 	// State for submit
 
@@ -88,26 +93,40 @@ function DashApp (){
 		cluster: null
 	};
 	// updating ML request object
-	mlRequest.features = userFeaturesOriginal;
-	mlRequest.cluster = clusterNum;
+	// mlRequest.features = userFeaturesOriginal;
+	// mlRequest.cluster = clusterNum;
+	//
 
 	// Sending POST request to ML API using axios
 
-	useEffect(
-		() => {
-			console.log('axios');
-			let mlApiUrl = '/Ml';
-			axios
-				.post('mlApiUrl', mlRequest)
-				.then(function (response){
-					console.log(response);
-				})
-				.catch(function (error){
-					console.log(error);
-				});
-		},
-		[ userSubmit ]
-	);
+	const handleSubmit = (clusterNum, Features) => {
+		console.log('axios');
+		let mlApiUrl = '/Ml';
+		axios
+			.post('mlApiUrl', mlRequest)
+			.then(function (response){
+				console.log(response);
+			})
+			.catch(function (error){
+				console.log(error);
+			});
+	};
+
+	// useEffect(
+	// 	() => {
+	// 		console.log('axios');
+	// 		let mlApiUrl = '/Ml';
+	// 		axios
+	// 			.post('mlApiUrl', mlRequest)
+	// 			.then(function (response){
+	// 				console.log(response);
+	// 			})
+	// 			.catch(function (error){
+	// 				console.log(error);
+	// 			});
+	// 	},
+	// 	[ userSubmit ]
+	// );
 
 	// //Getting parent components refs to pass as prop div height to list component for maxHeight argument
 	// const [ divHeight, setDivHeight ] = useState(null);
@@ -166,16 +185,6 @@ function DashApp (){
 
 					{/* ------------------ Mix Viz ------------------*/}
 					<div className='content6 generalComp'>
-						<iframe
-							src='https://public.domo.com/cards/bWxVg'
-							width='100%'
-							height='600'
-							align='center'
-							marginheight='0'
-							marginwidth='0'
-							frameborder='0'
-						/>
-
 						{/* <div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} /> */}
@@ -183,8 +192,7 @@ function DashApp (){
 
 					{/* ------------------ Machine Learning Control ------------------*/}
 					<div className='content8 generalComp'>
-						<MLSetup setClusterNumProp={setClusterNum} />
-						<RunButton userSubmit={toggleSubmit} />
+						<MLSetup handleSubmit={handleSubmit} userFeatures={userFeatures} />
 					</div>
 
 					{/* ----------- Data Table /Viz ------------------ */}
@@ -196,7 +204,7 @@ function DashApp (){
 						/>
 						{
 							checkedMain === false ? <div>
-								<WorldTable dataProps={data} />
+								<WorldTable dataProps={data} userFeaturesProps={userFeatures} />
 							</div> :
 							<div style={{ height: '100%' }}>
 								<PieViz />

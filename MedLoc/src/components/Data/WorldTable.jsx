@@ -1,6 +1,7 @@
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import equal from 'fast-deep-equal';
 
 class WorldTable extends React.Component {
 	constructor (props) {
@@ -19,7 +20,8 @@ class WorldTable extends React.Component {
 			overrides: {
 				MUIDataTable: {
 					root: {
-						backgroundColor: 'red'
+						backgroundColor: 'red',
+						margin: 'dense'
 					},
 					paper: {
 						boxShadow: 'none'
@@ -29,7 +31,8 @@ class WorldTable extends React.Component {
 					root: {
 						backgroundColor: 'inherit',
 						padding: '3px',
-						textAlign: 'center'
+						textAlign: 'center',
+						margin: 'dense'
 					}
 				},
 				MUIDataTableToolbar: {
@@ -40,12 +43,12 @@ class WorldTable extends React.Component {
 			}
 		});
 
-	componentDidMount () {
-		this.setState({ loading: true });
+	render () {
+		// Getting data and processing to format acceptable by table
+		let listItems = []; //column names
+		let dataItems = []; //processed data
 
-		let listItems = [];
-		let dataItems = [];
-		let dataPopulator = this.props.dataProps.features;
+		let dataPopulator = this.props.dataProps.features; //getting features from the main json
 		if (dataPopulator !== null) {
 			for (var key in dataPopulator) {
 				if (dataPopulator.hasOwnProperty(key)) {
@@ -56,13 +59,16 @@ class WorldTable extends React.Component {
 			}
 		}
 
-		let columnValues = listItems.map((f) => ({ name: f, label: f }));
+		let userFeaturesOriginal = [];
+		if (this.props.userFeaturesProps !== null) {
+			userFeaturesOriginal = this.props.userFeaturesProps.map((feature) =>
+				feature.replace(/ /g, '_')
+			);
+		}
+		let columnValues = [];
+		columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f }));
+		console.log(columnValues, 'col');
 
-		this.setState({ columns: columnValues, loading: false });
-		this.setState({ dataState: dataItems, loading: false });
-	}
-
-	render () {
 		return (
 			<React.Fragment>
 				<div style={{ marginLeft: '5px', marginRight: '5px' }}>
@@ -73,9 +79,8 @@ class WorldTable extends React.Component {
 							title={
 								<h4 style={{ float: 'left', color: '#383838' }}>Data Explorer</h4>
 							}
-							isLoading={this.state.loading}
-							columns={this.state.columns}
-							data={this.state.dataState}
+							columns={columnValues}
+							data={dataItems}
 							options={{
 								filter: true,
 

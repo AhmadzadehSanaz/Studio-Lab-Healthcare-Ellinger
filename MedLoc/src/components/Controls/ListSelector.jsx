@@ -11,6 +11,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 import Typography from '@material-ui/core/Typography';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -224,9 +226,11 @@ export default function TransferList (props){
 
 	return (
 		<React.Fragment>
-			<Typography variant='h6' className={classes.title}>
-				Features Selection
-			</Typography>
+			<Tooltip title={'yoyoyooyoyoyo'}>
+				<Typography variant='h6' className={classes.title}>
+					Features Selection
+				</Typography>
+			</Tooltip>
 
 			<Grid
 				container

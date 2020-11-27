@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import RunButton from '../Interface/RunButton';
 const useStyles = makeStyles((theme) => ({
 	formControl: {
 		margin: theme.spacing(2),
@@ -25,7 +25,7 @@ export default function SimpleSelect (props){
 	const handleChange = (event) => {
 		setCluster(event.target.value);
 	};
-	props.setClusterNumProp(cluster);
+
 	return (
 		<div>
 			<Grid container direction='column' alignItems='center' justify='space-around'>
@@ -52,6 +52,11 @@ export default function SimpleSelect (props){
 					</Select>
 					<FormHelperText>Choose number of Clusters</FormHelperText>
 				</FormControl>
+				<RunButton
+					propsOnClick={() => {
+						props.handleSubmit(cluster, props.userFeatures);
+					}}
+				/>
 			</Grid>
 		</div>
 	);

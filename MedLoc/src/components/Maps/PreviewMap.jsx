@@ -50,12 +50,6 @@ function PreviewMap (props){
 
 	const center = [ 41.8781, -87.6298 ];
 
-	const onEachHex = (hex, layer) => {
-		const name = hex.properties[columnName];
-
-		layer.bindPopup(` ${columnName}, ${name}`);
-	};
-
 	return (
 		<Map
 			attributionControl={false}
@@ -70,7 +64,7 @@ function PreviewMap (props){
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 				</BaseLayer>
 			</LayersControl>
-			<GeoJSON data={props.dataProps} style={styles} onEachFeature={onEachHex} />
+			<GeoJSON data={props.dataProps} style={styles} />
 			{/* <HighlightedGeoJson passData={props.dataProps} /> */}
 			<Legend />
 		</Map>

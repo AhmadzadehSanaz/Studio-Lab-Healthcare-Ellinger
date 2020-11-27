@@ -1,14 +1,16 @@
 /* eslint-disable no-unreachable */
-import React, { useState, useEffect } from 'react';
-import { Map, GeoJSON, TileLayer, LayersControl, AttributionControl } from 'react-leaflet';
+import React, { useState, useEffect, useRef } from 'react';
+import { Map, GeoJSON, TileLayer, LayersControl, AttributionControl, Popup } from 'react-leaflet';
 import Legend from './Legend';
 import HighlightedGeoJson from './HighlightedGeoJson';
+import L from 'leaflet';
 import * as d3 from 'd3';
 
 function Mainmap (props){
 	//getting the first object from geojson to extract column names
 
 	let dataPopulator = props.dataProps.features;
+	const geojson = useRef();
 
 	if (dataPopulator !== null) {
 		for (var key in dataPopulator) {
@@ -58,23 +60,53 @@ function Mainmap (props){
 
 	//Pop up binding it has to be updated based on each change [useEffect?] WIP
 
-	const [ hookCol, setHookCol ] = useState(columnName);
+	// useEffect(
+	// 	() => {
+	// 		if (columnName !== undefined) {
+	// 			onEachHex();
+	// 			setHookCol(columnName);
+	// 			console.log('useEffect', columnName);
+	// 		}
+	// 	},
+	// 	[ columnName ]
+	// );
+
+	// const onEachHex = (hex, layer) => {
+	// 	const name = hex.properties[columnName];
+	// 	console.log(name, 'inside');
+
+	// 	layer.bindPopup(` ${name}`);
+	// };
+
+	// const onEachHex = (feature, layer) => {
+	// 	layer.on({
+	// 		click: function (event){
+	// 			var popup = L.popup()
+	// 				.setLatLng(event.latlng)
+	// 				.setContent(this.feature.properties)
+	// 				.openOn(layer._map);
+	// 		}
+	// 	});
+	// };
+
+	// const CountryName = ({ feature }) => {
+	// 	if (feature !== undefined) {
+	// 		return <Popup>{feature.properties[columnName]}</Popup>;
+	// 	}
+	// };
 
 	useEffect(
 		() => {
-			if (columnName !== undefined) {
-				onEachHex();
-				setHookCol(columnName);
-				console.log('useEffect', columnName);
+			if (geojson.current) {
+				geojson.current.leafletElement.eachLayer(function (layer){
+					console.log(layer);
+					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
+				});
 			}
 		},
 		[ columnName ]
 	);
-	const onEachHex = (hex, layer) => {
-		// const name = hex.properties[columnName];
-		console.log(hookCol, 'hook');
-		layer.bindPopup(` ${hookCol}`);
-	};
+
 	// WIP Section end ____________________________________
 
 	return (
@@ -91,7 +123,7 @@ function Mainmap (props){
 					<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
 				</BaseLayer>
 			</LayersControl>
-			<GeoJSON data={props.dataProps} style={styles} onEachFeature={onEachHex} />
+			<GeoJSON ref={geojson} data={props.dataProps} style={styles} />
 
 			{/* Highlited Geojson leaflet example (failed attempt) */}
 			{/* <HighlightedGeoJson passData={props.dataProps} /> */}

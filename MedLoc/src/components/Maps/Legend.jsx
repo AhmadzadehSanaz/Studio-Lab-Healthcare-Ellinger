@@ -53,6 +53,7 @@ class Legend extends MapControl {
 						getColor(from + 1) +
 						'"></i> ' +
 						from +
+						
 						(
 							to ? '&ndash;' + to :
 							'+')
