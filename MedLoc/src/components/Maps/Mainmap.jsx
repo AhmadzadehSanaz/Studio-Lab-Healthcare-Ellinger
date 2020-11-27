@@ -56,45 +56,6 @@ function Mainmap (props){
 	//Map center on load
 	const center = [ 41.8781, -87.6298 ];
 
-	// WIP Section start ____________________________________ useCallback?
-
-	//Pop up binding it has to be updated based on each change [useEffect?] WIP
-
-	// useEffect(
-	// 	() => {
-	// 		if (columnName !== undefined) {
-	// 			onEachHex();
-	// 			setHookCol(columnName);
-	// 			console.log('useEffect', columnName);
-	// 		}
-	// 	},
-	// 	[ columnName ]
-	// );
-
-	// const onEachHex = (hex, layer) => {
-	// 	const name = hex.properties[columnName];
-	// 	console.log(name, 'inside');
-
-	// 	layer.bindPopup(` ${name}`);
-	// };
-
-	// const onEachHex = (feature, layer) => {
-	// 	layer.on({
-	// 		click: function (event){
-	// 			var popup = L.popup()
-	// 				.setLatLng(event.latlng)
-	// 				.setContent(this.feature.properties)
-	// 				.openOn(layer._map);
-	// 		}
-	// 	});
-	// };
-
-	// const CountryName = ({ feature }) => {
-	// 	if (feature !== undefined) {
-	// 		return <Popup>{feature.properties[columnName]}</Popup>;
-	// 	}
-	// };
-
 	useEffect(
 		() => {
 			if (geojson.current) {

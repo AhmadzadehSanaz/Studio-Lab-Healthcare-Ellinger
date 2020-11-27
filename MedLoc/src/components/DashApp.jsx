@@ -65,21 +65,8 @@ function DashApp (){
 		setCheckedMain((prev) => !prev);
 	};
 
-	// State for getting number of clusters
-
 	// Sate for getting features user selected for running the model
 	const [ userFeatures, setUserFeatures ] = useState(null);
-
-	// let userFeaturesOriginal = [];
-	// if (userFeatures !== null) {
-	// 	userFeaturesOriginal = userFeatures.map((feature) => feature.replace(/ /g, '_'));
-	// }
-
-	// const [ columnTable, setColumnTable ] = useState([]);
-	// let columnValues = [];
-
-	// setColumnTable(columnValues);
-	// console.log(columnValues, 'app');
 
 	// State for submit
 
@@ -92,16 +79,16 @@ function DashApp (){
 		features: [],
 		cluster: null
 	};
-	// updating ML request object
-	// mlRequest.features = userFeaturesOriginal;
-	// mlRequest.cluster = clusterNum;
-	//
 
 	// Sending POST request to ML API using axios
 
 	const handleSubmit = (clusterNum, Features) => {
-		console.log('axios');
 		let mlApiUrl = '/Ml';
+		let mlRequest = {
+			features: [ Features ],
+			cluster: clusterNum
+		};
+		console.log(mlRequest);
 		axios
 			.post('mlApiUrl', mlRequest)
 			.then(function (response){
