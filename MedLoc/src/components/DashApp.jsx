@@ -26,7 +26,6 @@ import MLSetup from './Controls/MLSetup';
 import Toggle from './Interface/Toggle';
 import Loading from './Loading';
 import Navbar from './Interface/Navbar';
-import RunButton from './Interface/RunButton';
 
 // ____________________________________APP____________________________________
 
@@ -98,30 +97,6 @@ function DashApp (){
 				console.log(error);
 			});
 	};
-
-	// useEffect(
-	// 	() => {
-	// 		console.log('axios');
-	// 		let mlApiUrl = '/Ml';
-	// 		axios
-	// 			.post('mlApiUrl', mlRequest)
-	// 			.then(function (response){
-	// 				console.log(response);
-	// 			})
-	// 			.catch(function (error){
-	// 				console.log(error);
-	// 			});
-	// 	},
-	// 	[ userSubmit ]
-	// );
-
-	// //Getting parent components refs to pass as prop div height to list component for maxHeight argument
-	// const [ divHeight, setDivHeight ] = useState(null);
-	// const listDivRef = useRef(null);
-	// //Reading heigh after it's rendered
-	// useEffect(() => {
-	// 	setDivHeight(listDivRef.current.offsetHeight);
-	// }, []);
 
 	return (
 		<div className='App'>

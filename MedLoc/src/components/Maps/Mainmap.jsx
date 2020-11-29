@@ -60,7 +60,7 @@ function Mainmap (props){
 		() => {
 			if (geojson.current) {
 				geojson.current.leafletElement.eachLayer(function (layer){
-					console.log(layer);
+					// console.log(layer);
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
 				});
 			}
@@ -86,8 +86,6 @@ function Mainmap (props){
 			</LayersControl>
 			<GeoJSON ref={geojson} data={props.dataProps} style={styles} />
 
-			{/* Highlited Geojson leaflet example (failed attempt) */}
-			{/* <HighlightedGeoJson passData={props.dataProps} /> */}
 			<Legend extentProps={legendValues} />
 		</Map>
 	);

@@ -34,7 +34,9 @@ class Legend extends MapControl {
 			result.push(right);
 			return result;
 		}
-
+		let mamad = split(100, 200, 5);
+		console.log(this.props.extentProps);
+		console.log(mamad, 'mamad');
 		const legend = L.control({ position: 'bottomleft' });
 
 		legend.onAdd = () => {
@@ -53,7 +55,6 @@ class Legend extends MapControl {
 						getColor(from + 1) +
 						'"></i> ' +
 						from +
-						
 						(
 							to ? '&ndash;' + to :
 							'+')
