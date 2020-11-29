@@ -1,5 +1,6 @@
 import requests
 from github_data_edit import get_data
+import json
 
 '''REMEMBER TO RUN FLASK APPLICATION FIRST BEFORE RUNNING THIS CODE'''
 
@@ -15,5 +16,5 @@ cluster_features = ["adult_obesity","population_no_health_insurance","nearest_ho
 num_clusters = 5
 
 #Official POST request that is sent to the Flask API application
-cluster = requests.post(BASE + "cluster",  {"data": data, "selected features": cluster_features, "number of clusters": num_clusters})
+cluster = requests.post(BASE + "/get_cluster",  {"data": data, "selected features": cluster_features, "number of clusters": num_clusters})
 print(cluster.json())

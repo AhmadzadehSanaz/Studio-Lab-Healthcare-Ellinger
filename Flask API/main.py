@@ -19,24 +19,17 @@ cluster_post_arguments.add_argument("data", type=str)
 cluster_post_arguments.add_argument("selected features", type=str, action='append', default=[])
 cluster_post_arguments.add_argument("number of clusters", type=int)
 
-class MedLocAPI(Resource):
 
-    '''Not in use'''
-    def get(self):
-        github_url = "https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson"
-        data = get_data(github_url)
-        return data
+@app.route('/get_cluster', methods=['POST'])
 
-    def post(self):
-        arguments = cluster_post_arguments.parse_args()
-        data = arguments['data']
-        selected_attributes = arguments['selected features']
-        number_of_cluster = arguments['number of clusters']
-        cluster_data = km.cluster_generator(data, selected_attributes, number_of_cluster)
-        km.boxplot_generator_subplot(cluster_data[1], selected_attributes)
-        return cluster_data[0]
-
-api.add_resource(MedLocAPI, "/cluster")
+def post_data():
+    arguments = cluster_post_arguments.parse_args()
+    data = arguments['data']
+    selected_attributes = arguments['selected features']
+    number_of_cluster = arguments['number of clusters']
+    cluster_data = km.cluster_generator(data, selected_attributes, number_of_cluster)
+    km.boxplot_generator_subplot(cluster_data[1], selected_attributes)
+    return cluster_data[1]
 
 #Run 
 if __name__ == "__main__":
