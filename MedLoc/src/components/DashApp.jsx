@@ -12,6 +12,7 @@ import WorldTable from './Data/WorldTable';
 
 //Visualizations
 import PieViz from './Data/PieViz';
+import BoxPlot from './Data/Boxplot';
 
 // Maps
 import Mainmap from './Maps/Mainmap';
@@ -147,6 +148,7 @@ function DashApp (){
 
 					{/* ------------------ Mix Viz ------------------*/}
 					<div className='content6 generalComp'>
+						<BoxPlot />
 						{/* <div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} />
 						<div style={{ height: '100%', width: '33%', flexGrow: '1' }} /> */}
