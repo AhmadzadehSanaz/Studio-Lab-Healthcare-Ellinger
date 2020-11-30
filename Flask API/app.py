@@ -125,10 +125,17 @@ def post_data():
     #selected_attributes = request.form['selected features']
     #number_of_cluster = request.form['number of clusters']
 
+    #Run Kmeans cluster algorithm
     cluster_data = cluster_generator(data, selected_attributes, number_of_cluster)
+    
+    #Testing alternatives
     #return make_response(jsonify(cluster_data))
-    return json.dumps(cluster_data)
-
+    #return "<body><pre style ='word-wrap: break-word; white-space: pre-wrap;'>" + json.dumps(cluster_json) + "</pre></body>"
+    #return json.dumps(cluster_data)
+    
+    #For debuging
+    #print(cluster_data)
+    return cluster_data
 #Run 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
