@@ -1,16 +1,32 @@
 /* eslint-disable no-unreachable */
 import React, { useState, useEffect, useRef } from 'react';
-import { Map, GeoJSON, TileLayer, LayersControl, AttributionControl, Popup } from 'react-leaflet';
+import { Map, GeoJSON, TileLayer, LayersControl, Popup } from 'react-leaflet';
 import Legend from './Legend';
 import HighlightedGeoJson from './HighlightedGeoJson';
 import L from 'leaflet';
 import * as d3 from 'd3';
+import dummy from './states.json';
 
 function Mainmap (props){
 	//getting the first object from geojson to extract column names
 
+	let clusterViz = dummy.clean_data;
+	console.log(clusterViz, 'tom');
 	let dataPopulator = props.dataProps.features;
+	// let dataPopulator = clusterViz;
 	const geojson = useRef();
+
+	// if (clusterViz !== null) {
+	// 	for (var key in clusterViz) {
+	// 		if (clusterViz.hasOwnProperty(key)) {
+	// 			let firstPropA = clusterViz[key];
+	// 			let listItemsA = Object.keys(firstPropA.properties);
+	// 			// let listValue = Object.values(firstProp.properties);
+
+	// 			break;
+	// 		}
+	// 	}
+	// }
 
 	if (dataPopulator !== null) {
 		for (var key in dataPopulator) {
@@ -37,10 +53,26 @@ function Mainmap (props){
 		.domain([ 20, 200, 400, 800 ])
 		.range([ 'coral', 'green', 'blue', 'yellow', 'blue' ]);
 
+	function getColor (d){
+		var color;
+		if (d === 5) {
+			color = '#800026';
+		} else if (d === 4) {
+			color = '#BD0026';
+		} else if (d === 3) {
+			color = '#E31A1C';
+		} else if (d === 2) {
+			color = '#FC4E2A';
+		} else if (d === 1) {
+			color = '#FD8D3C';
+		} else color = '#FEB24C';
+		return color;
+	}
+
 	//Coloring each feature based on the user selected values from the list selector
 	function styles (feature){
 		return {
-			fillColor: colorScale(feature.properties[columnName]),
+			fillColor: getColor(feature.properties[columnName]),
 
 			weight: 0,
 			opacity: 1,
@@ -60,8 +92,8 @@ function Mainmap (props){
 		() => {
 			if (geojson.current) {
 				geojson.current.leafletElement.eachLayer(function (layer){
-					// console.log(layer);
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
+					const legend = L.control({ position: 'bottomright' });
 				});
 			}
 		},

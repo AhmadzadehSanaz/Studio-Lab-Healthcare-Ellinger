@@ -67,7 +67,6 @@ class WorldTable extends React.Component {
 		}
 		let columnValues = [];
 		columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f }));
-		console.log(columnValues, 'col');
 
 		return (
 			<React.Fragment>

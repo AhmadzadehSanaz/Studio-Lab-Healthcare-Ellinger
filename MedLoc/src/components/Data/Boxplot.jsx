@@ -102,6 +102,7 @@ class Boxplot extends React.Component {
 				<VictoryChart
 					domainPadding={20}
 					width={500}
+					height={400}
 					theme={VictoryTheme.material}
 					colorScale={'warm'}
 					containerComponent={

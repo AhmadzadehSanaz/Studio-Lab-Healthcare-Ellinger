@@ -61,59 +61,14 @@ const data = [
 		friesColor: 'hsl(140, 70%, 50%)',
 		donut: 111,
 		donutColor: 'hsl(31, 70%, 50%)'
-	},
-	{
-		country: 'AI',
-		'hot dog': 69,
-		'hot dogColor': 'hsl(15, 70%, 50%)',
-		burger: 175,
-		burgerColor: 'hsl(221, 70%, 50%)',
-		sandwich: 46,
-		sandwichColor: 'hsl(199, 70%, 50%)',
-		kebab: 100,
-		kebabColor: 'hsl(268, 70%, 50%)',
-		fries: 102,
-		friesColor: 'hsl(293, 70%, 50%)',
-		donut: 133,
-		donutColor: 'hsl(211, 70%, 50%)'
-	},
-	{
-		country: 'AL',
-		'hot dog': 178,
-		'hot dogColor': 'hsl(151, 70%, 50%)',
-		burger: 103,
-		burgerColor: 'hsl(224, 70%, 50%)',
-		sandwich: 56,
-		sandwichColor: 'hsl(170, 70%, 50%)',
-		kebab: 161,
-		kebabColor: 'hsl(188, 70%, 50%)',
-		fries: 69,
-		friesColor: 'hsl(266, 70%, 50%)',
-		donut: 24,
-		donutColor: 'hsl(259, 70%, 50%)'
-	},
-	{
-		country: 'AM',
-		'hot dog': 102,
-		'hot dogColor': 'hsl(272, 70%, 50%)',
-		burger: 193,
-		burgerColor: 'hsl(117, 70%, 50%)',
-		sandwich: 157,
-		sandwichColor: 'hsl(76, 70%, 50%)',
-		kebab: 5,
-		kebabColor: 'hsl(292, 70%, 50%)',
-		fries: 38,
-		friesColor: 'hsl(214, 70%, 50%)',
-		donut: 12,
-		donutColor: 'hsl(17, 70%, 50%)'
 	}
 ];
 
-export default function Viz(){
+export default function Viz (){
 	return (
 		<ResponsiveBar
 			data={data}
-			keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
+			keys={[ 'Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5', 'Cluster 6' ]}
 			indexBy='country'
 			margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
 			padding={0.3}
@@ -142,13 +97,13 @@ export default function Viz(){
 			fill={[
 				{
 					match: {
-						id: 'fries'
+						id: 'Cluster 1'
 					},
 					id: 'dots'
 				},
 				{
 					match: {
-						id: 'sandwich'
+						id: 'Cluster 2'
 					},
 					id: 'lines'
 				}

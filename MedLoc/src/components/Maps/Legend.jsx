@@ -35,8 +35,7 @@ class Legend extends MapControl {
 			return result;
 		}
 		let mamad = split(100, 200, 5);
-		console.log(this.props.extentProps);
-		console.log(mamad, 'mamad');
+
 		const legend = L.control({ position: 'bottomleft' });
 
 		legend.onAdd = () => {

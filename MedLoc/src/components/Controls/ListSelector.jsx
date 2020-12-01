@@ -226,7 +226,7 @@ export default function TransferList (props){
 
 	return (
 		<React.Fragment>
-			<Tooltip title={'yoyoyooyoyoyo'}>
+			<Tooltip title={'Hover over each section to learn about how they work'}>
 				<Typography variant='h6' className={classes.title}>
 					Features Selection
 				</Typography>
