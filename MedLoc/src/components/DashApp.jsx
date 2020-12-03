@@ -78,7 +78,7 @@ function DashApp (){
 	// ML api request object
 	let mlRequest = {
 		features: [],
-		cluster: null
+		cluster: 1
 	};
 
 	// Sending POST request to ML API using axios

@@ -65,8 +65,8 @@ class WorldTable extends React.Component {
 				feature.replace(/ /g, '_')
 			);
 		}
-		let columnValues = [];
-		columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f }));
+		let columnValues = [ 'fid' ];
+		columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f.slice(0, 20) }));
 
 		return (
 			<React.Fragment>
