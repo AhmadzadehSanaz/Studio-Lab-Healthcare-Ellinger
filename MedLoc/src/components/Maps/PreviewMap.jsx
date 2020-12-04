@@ -1,10 +1,10 @@
 /* eslint-disable no-unreachable */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-import { Map, GeoJSON, TileLayer, LayersControl } from 'react-leaflet';
-import Legend from './Legend';
-import HighlightedGeoJson from './HighlightedGeoJson';
-import * as d3 from 'd3';
+import { Map, GeoJSON, TileLayer, LayersControl } from "react-leaflet";
+import FeatureName from "./Legend";
+import HighlightedGeoJson from "./HighlightedGeoJson";
+import * as d3 from "d3";
 
 function PreviewMap (props){
 	//getting the first object from geojson to extract column names
@@ -17,6 +17,7 @@ function PreviewMap (props){
 			if (dataPopulator.hasOwnProperty(key)) {
 				let firstProp = dataPopulator[key];
 				let listItems = Object.keys(firstProp.properties);
+
 				// let listValue = Object.values(firstProp.properties);
 
 				break;
@@ -26,26 +27,49 @@ function PreviewMap (props){
 
 	//Getting the values from the feature and defining color ranges
 	let columnName = props.userSelectedItems;
-	// console.log(columnName, 'colname');
+
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
+	const setValues = new Set(columnValues);
+
 	let legendValues = d3.extent(columnValues);
 	//Linear breaks
-	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ 'coral', 'blue' ]);
+	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ "coral", "blue" ]);
+	let colorScaleCategorical = d3
+		.scaleLinear()
+		.domain(d3.extent(columnValues))
+		.range([ "coral", "blue" ]);
+
+	let colors;
+	let tempExtent = d3.extent(columnValues);
+	if (tempExtent !== undefined) {
+		colors = split(tempExtent[0], tempExtent[1], 5);
+	}
 	//Quant Breaks
 	let colorScaleQuant = d3
 		.scaleQuantize()
-		.domain([ 20, 200, 400, 800 ])
-		.range([ 'coral', 'green', 'blue', 'yellow', 'blue' ]);
+		.domain(colors)
+		.range([ "coral", "green", "blue", "yellow", "blue" ]);
+
+	function split (left, right, parts){
+		var result = [],
+			delta = (right - left) / (parts - 1);
+		while (left < right) {
+			result.push(left);
+			left += delta;
+		}
+		result.push(right);
+		return result;
+	}
 
 	//Coloring each feature based on the user selected values from the list selector
 	function styles (feature){
 		return {
-			fillColor: colorScale(feature.properties[columnName]),
+			fillColor: colorScaleQuant(feature.properties[columnName]),
 
 			weight: 0,
 			opacity: 1,
-			color: 'white',
-			dashArray: '3',
+			color: "white",
+			dashArray: "3",
 			fillOpacity: 1
 		};
 	}
@@ -75,7 +99,7 @@ function PreviewMap (props){
 			attributionControl={false}
 			center={center}
 			zoom={10}
-			style={{ height: '95%', width: '100%' }}>
+			style={{ height: "100%", width: "100%" }}>
 			<LayersControl position='topright'>
 				<BaseLayer checked name='OSM'>
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
@@ -85,8 +109,6 @@ function PreviewMap (props){
 				</BaseLayer>
 			</LayersControl>
 			<GeoJSON ref={geojson} data={props.dataProps} style={styles} />
-
-			<Legend extentProps={legendValues} />
 		</Map>
 	);
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import MUIDataTable from 'mui-datatables';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import equal from 'fast-deep-equal';
+import React from "react";
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import equal from "fast-deep-equal";
 
 class WorldTable extends React.Component {
 	constructor (props) {
@@ -12,32 +12,42 @@ class WorldTable extends React.Component {
 		stats: [],
 		loading: false,
 		columns: [],
-		dataState: []
+		dataState: [],
+		height: 201
 	};
 
+	getInitialState () {
+		return { state: 0 };
+	}
+
+	componentDidMount () {
+		const height = document.getElementById("tble").clientHeight;
+		this.setState({ height });
+	}
 	getMuiTheme = () =>
 		createMuiTheme({
 			overrides: {
 				MUIDataTable: {
 					root: {
-						backgroundColor: 'red',
-						margin: 'dense'
+						backgroundColor: "red",
+						margin: "dense",
+						padding: "auto"
 					},
 					paper: {
-						boxShadow: 'none'
+						boxShadow: "none"
 					}
 				},
 				MUIDataTableBodyCell: {
 					root: {
-						backgroundColor: 'inherit',
-						padding: '3px',
-						textAlign: 'center',
-						margin: 'dense'
+						backgroundColor: "inherit",
+						padding: "3px",
+						textAlign: "center",
+						margin: "dense"
 					}
 				},
 				MUIDataTableToolbar: {
 					root: {
-						minHeight: '40px'
+						minHeight: "40px"
 					}
 				}
 			}
@@ -62,21 +72,24 @@ class WorldTable extends React.Component {
 		let userFeaturesOriginal = [];
 		if (this.props.userFeaturesProps !== null) {
 			userFeaturesOriginal = this.props.userFeaturesProps.map((feature) =>
-				feature.replace(/ /g, '_')
+				feature.replace(/ /g, "_")
 			);
 		}
-		let columnValues = [ 'fid' ];
-		columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f.slice(0, 20) }));
+		// let columnValues1 = [ "fid" ];
+		let columnValues = userFeaturesOriginal.map((f) => ({ name: f, label: f.slice(0, 20) }));
+		columnValues.push("fid");
 
+		columnValues.reverse();
+		// console.log(columnValues);
 		return (
 			<React.Fragment>
-				<div style={{ marginLeft: '5px', marginRight: '5px' }}>
+				<div style={{ marginLeft: "5px", marginRight: "5px" }}>
 					<br />
 
 					<MuiThemeProvider theme={this.getMuiTheme()}>
 						<MUIDataTable
 							title={
-								<h4 style={{ float: 'left', color: '#383838' }}>Data Explorer</h4>
+								<h4 style={{ float: "left", color: "#383838" }}>Data Explorer</h4>
 							}
 							columns={columnValues}
 							data={dataItems}
@@ -84,11 +97,11 @@ class WorldTable extends React.Component {
 								filter: true,
 
 								rowHover: true,
-								downloadOptions: { filename: 'CustomDownload.csv', separator: ',' },
-								filterType: 'dropdown',
-								selectableRows: true,
-								responsive: 'stacked',
-								tableBodyHeight: '300px',
+								downloadOptions: { filename: "CustomDownload.csv", separator: "," },
+								filterType: "dropdown",
+
+								responsive: "stacked",
+								tableBodyHeight: "27vh",
 								draggableColumns: { enabled: true, transitionTime: 300 },
 								rowsPerPageOptions: [ 5, 10, 50 ],
 								rowsPerPage: 5,

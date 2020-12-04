@@ -1,42 +1,53 @@
 // Libraries import
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 
-import axios from 'axios';
-import '../styles/dashStyle.css';
+import axios from "axios";
+import "../styles/dashStyle.css";
 
 // ____________________________________ Imports ____________________________________
 
 //Data
-import WorldTable from './Data/WorldTable';
+import WorldTable from "./Data/WorldTable";
 
 //Visualizations
-import PieViz from './Data/PieViz';
-import BoxPlot from './Data/Boxplot';
-import Vizz from './Data/Vizz';
+import PieViz from "./Data/PieViz";
+import BoxPlot from "./Data/Boxplot";
+import Viz from "./Data/Viz";
 
 // Maps
-import Mainmap from './Maps/Mainmap';
-import PreviewMap from './Maps/PreviewMap';
+import Mainmap from "./Maps/Mainmap";
+import PreviewMap from "./Maps/PreviewMap";
 
 // Feature
-import ListSelector from './Controls/ListSelector';
-import Synthesizer from './Controls/Synthesizer';
-import MLSetup from './Controls/MLSetup';
+import ListSelector from "./Controls/ListSelector";
+import Synthesizer from "./Controls/Synthesizer";
+import MLSetup from "./Controls/MLSetup";
 
 // UI
-import Toggle from './Interface/Toggle';
-import Loading from './Loading';
-import Navbar from './Interface/Navbar';
+import Toggle from "./Interface/Toggle";
+import Loading from "./Loading";
+import Navbar from "./Interface/Navbar";
 
 // ____________________________________APP____________________________________
 
 function DashApp (){
 	// To Do : useMemo hook for improving performance for the functions that are heavy
+	const stageCanvasRef = useRef(null);
+	const [ divHeight, setDivHeight ] = useState("200px");
+
+	useEffect(() => {
+		// The 'current' property contains info of the reference:
+		// align, title, ... , width, height, etc.
+		if (stageCanvasRef.current) {
+			setDivHeight(stageCanvasRef.current.offsetHeight);
+			// let width  = stageCanvasRef.current.offsetWidth;
+		}
+	});
 
 	//Fetching data
 	const fetchUrl =
-		'https://raw.githubusercontent.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/main/Data%20Pipeline/hexagon_collection_master.geojson';
+		"https://raw.githubusercontent.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/main/Data%20Pipeline/hexagon_collection_master.geojson";
 
 	const [ data, setData ] = useState(null);
 
@@ -55,7 +66,8 @@ function DashApp (){
 	}, []);
 
 	// State for getting user selected feature which will be passed to maps
-	const [ userSelected, setUserSelected ] = useState();
+	const [ userSelected, setUserSelected ] = useState("Preview_Map");
+	console.log(userSelected, "mamad");
 
 	// state for maps
 	const [ userClicked, setUserClicked ] = useState(false);
@@ -75,23 +87,24 @@ function DashApp (){
 	const toggleSubmit = () => {
 		setUserSubmit((prev) => !prev);
 	};
-	// ML api request object
-	let mlRequest = {
-		features: [],
-		cluster: 1
-	};
 
 	// Sending POST request to ML API using axios
 
 	const handleSubmit = (clusterNum, Features) => {
-		let mlApiUrl = '/Ml';
+		let mlApiUrl = "http://medloc-api.herokuapp.com/get_cluster";
+		// replacing space with _ for sending to serve
+		let featuresToAPI = Features.map((item) => item.replace(/ /g, "_"));
 		let mlRequest = {
-			features: [ Features ],
-			cluster: clusterNum
+			"selected features": featuresToAPI,
+			"number of clusters": clusterNum
 		};
 		console.log(mlRequest);
 		axios
-			.post('mlApiUrl', mlRequest)
+			.post(mlApiUrl, JSON.stringify(mlRequest), {
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
 			.then(function (response){
 				console.log(response);
 			})
@@ -121,12 +134,15 @@ function DashApp (){
 							dataProps={data}
 							methodProps={setUserSelected}
 							featureProps={setUserFeatures}
+							handleSubmit={handleSubmit}
+							userFeatures={userFeatures}
 						/>
+						<MLSetup handleSubmit={handleSubmit} userFeatures={userFeatures} />
 					</div>
 
 					{/*  ------------------ Map Preview ------------------*/}
-					<div className='content4 generalComp'>
-						<h5 style={{ margin: '5px' }}> Feature Preview </h5>
+					<div style={{ position: "relative" }} className='content4 generalComp'>
+						<h6 style={{ marginTop: "5px", padding: "3px" }}> Preview Map </h6>
 						<span>
 							<PreviewMap
 								dataProps={data}
@@ -134,10 +150,25 @@ function DashApp (){
 								userClickedProp={userClicked}
 							/>
 						</span>
+
+						<h6
+							style={{
+								position: "absolute",
+								top: "280px",
+								right: "15",
+								marginLeft: "20px",
+								padding: "5px",
+								height: "30px",
+								zIndex: "9999",
+								background: "lightgrey",
+								borderRadius: "5px"
+							}}>
+							{userSelected.replace(/_/g, " ")}{" "}
+						</h6>
 					</div>
 					{/* ------------------ Main Map ------------------*/}
 					<div className='content5 generalComp'>
-						<h5 style={{ margin: '5px' }}> Model View </h5>
+						<h6 style={{ margin: "5px", padding: "3px" }}> Model View </h6>
 						<span>
 							<Mainmap
 								dataProps={data}
@@ -150,45 +181,47 @@ function DashApp (){
 					{/* ------------------ Mix Viz ------------------*/}
 					<div
 						className='content6 generalComp'
-						style={{ display: 'flex', flexDirection: 'row' }}>
-						<div style={{ height: '100%', width: '50%', flexGrow: '1' }}>
-							{' '}
-							<BoxPlot />
+						style={{ display: "flex", flexDirection: "row" }}>
+						<div style={{ height: "100%", width: "50%", flexGrow: "1" }}>
+							{" "}
+							{/* <BoxPlot /> */}
+							<h6>mamad</h6>
 						</div>
-						<div style={{ height: '100%', width: '50%', flexGrow: '1' }}>
-							{' '}
-							<Vizz />{' '}
-						</div>
+						<div style={{ height: "100%", width: "50%", flexGrow: "1" }}> </div>
 					</div>
 
 					{/* ------------------ Machine Learning Control ------------------*/}
-					<div className='content8 generalComp'>
-						<MLSetup handleSubmit={handleSubmit} userFeatures={userFeatures} />
-					</div>
+					{/* <div className='content8 generalComp'>
+
+					</div> */}
 
 					{/* ----------- Data Table /Viz ------------------ */}
-					<div className='content7 generalComp'>
+					<div className='content7 generalComp' id='tble' ref={stageCanvasRef}>
 						<Toggle
-							style={{ margin: '5px' }}
+							style={{ margin: "5px" }}
 							toggleProps={toggleCheckedMain}
 							checkedProps={checkedMain}
 						/>
 						{
 							checkedMain === false ? <div>
-								<WorldTable dataProps={data} userFeaturesProps={userFeatures} />
+								<WorldTable
+									dataProps={data}
+									userFeaturesProps={userFeatures}
+									heightProp={divHeight}
+								/>
 							</div> :
-							<div style={{ height: '100%' }}>
-								<PieViz />
+							<div style={{ height: "95%" }}>
+								<Viz />
 							</div>}
 					</div>
 				</div> :
 				// Loading
 				<div
 					style={{
-						height: '100vh',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center'
+						height: "100vh",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center"
 					}}>
 					<Loading />
 				</div>}

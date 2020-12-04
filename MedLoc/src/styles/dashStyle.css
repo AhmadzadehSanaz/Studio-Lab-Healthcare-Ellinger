@@ -32,22 +32,21 @@ body {
 .containerDash {
     display: grid;
     height: 100vh;
-    grid-template-columns: 0.5fr 1fr 1fr 0.7fr 1fr 1fr;
-    grid-template-rows: 0.5fr 0.6fr 1fr 1fr 0.2fr 1fr 1fr;
+    grid-template-columns: 0.3fr 0.8fr 0.8fr 0.5fr 0.8fr 0.8fr;
+    grid-template-rows: 0.1fr 1fr 0.1fr 1fr;
     grid-template-areas: "nav nav nav nav nav nav"/*Nav */
-    "sidebar content4 content4 main main main"/*Content 4    Map */
-    "sidebar content4 content4 content8 content5 content5 "/*Content 4    Map */
-    "sidebar content4 content4 content8 content5 content5"/*Content 4    Map */
-    "sidebar content7 content7 content8 content5 content5"/*Sidebar  ListSelector    Map */
-    "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
+    /*Content 4    Map */
+    "sidebar content4 content4 content5 content5 content5 "/*Content 4    Map */
+    /*Content 4    Map */
+    "sidebar content7 content7 main main main"/*Sidebar  ListSelector    Map */
+    /*Content 4    Map */
     "sidebar content7 content7 content6 content6 content6"/*Content 4    Map */
     ;
-    grid-gap: 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 12px;
+    grid-gap: 0.5rem;
+    font-weight: 400;
+    /* text-transform: uppercase; */
+    /* font-size: 0.6rem; */
     color: #383838;
-    text-align: center;
     background: #d3d3d3;
     padding: 10px;
 }
@@ -75,6 +74,7 @@ body {
     padding-top: var(--main-padding);
     width: 310px;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -101,7 +101,7 @@ body {
 .content4 {
     grid-area: content4;
     height: '100%';
-    overflow: auto;
+    overflow: hidden;
     line-height: '300px';
     border-radius: var(--main-radius);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -109,6 +109,7 @@ body {
 
 .content5 {
     grid-area: content5;
+    overflow: hidden;
     border-radius: var(--main-radius);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -123,7 +124,7 @@ body {
 .content7 {
     grid-area: content7;
     height: '100%';
-    overflow: auto;
+    overflow: hid;
     line-height: '300px';
     border-radius: var(--main-radius);
     padding-top: var(--main-padding);

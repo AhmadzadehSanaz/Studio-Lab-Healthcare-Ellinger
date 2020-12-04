@@ -1,17 +1,17 @@
 /* eslint-disable no-unreachable */
-import React, { useState, useEffect, useRef } from 'react';
-import { Map, GeoJSON, TileLayer, LayersControl, Popup } from 'react-leaflet';
-import Legend from './Legend';
-import HighlightedGeoJson from './HighlightedGeoJson';
-import L from 'leaflet';
-import * as d3 from 'd3';
-import dummy from './states.json';
+import React, { useState, useEffect, useRef } from "react";
+import { Map, GeoJSON, TileLayer, LayersControl, Popup } from "react-leaflet";
+import Legend from "./Legend";
+import HighlightedGeoJson from "./HighlightedGeoJson";
+import L from "leaflet";
+import * as d3 from "d3";
+import dummy from "./states.json";
 
 function Mainmap (props){
 	//getting the first object from geojson to extract column names
 
 	let clusterViz = dummy.clean_data;
-	console.log(clusterViz, 'tom');
+
 	let dataPopulator = props.dataProps.features;
 	// let dataPopulator = clusterViz;
 	const geojson = useRef();
@@ -46,26 +46,26 @@ function Mainmap (props){
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
 	let legendValues = d3.extent(columnValues);
 	//Linear breaks
-	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ 'coral', 'blue' ]);
+	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ "coral", "blue" ]);
 	//Quant Breaks
 	let colorScaleQuant = d3
 		.scaleQuantize()
 		.domain([ 20, 200, 400, 800 ])
-		.range([ 'coral', 'green', 'blue', 'yellow', 'blue' ]);
+		.range([ "coral", "green", "blue", "yellow", "blue" ]);
 
 	function getColor (d){
 		var color;
 		if (d === 5) {
-			color = '#800026';
+			color = "#800026";
 		} else if (d === 4) {
-			color = '#BD0026';
+			color = "#BD0026";
 		} else if (d === 3) {
-			color = '#E31A1C';
+			color = "#E31A1C";
 		} else if (d === 2) {
-			color = '#FC4E2A';
+			color = "#FC4E2A";
 		} else if (d === 1) {
-			color = '#FD8D3C';
-		} else color = '#FEB24C';
+			color = "#FD8D3C";
+		} else color = "#FEB24C";
 		return color;
 	}
 
@@ -76,8 +76,8 @@ function Mainmap (props){
 
 			weight: 0,
 			opacity: 1,
-			color: 'white',
-			dashArray: '3',
+			color: "white",
+			dashArray: "3",
 			fillOpacity: 1
 		};
 	}
@@ -93,7 +93,7 @@ function Mainmap (props){
 			if (geojson.current) {
 				geojson.current.leafletElement.eachLayer(function (layer){
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
-					const legend = L.control({ position: 'bottomright' });
+					const legend = L.control({ position: "bottomright" });
 				});
 			}
 		},
@@ -107,7 +107,7 @@ function Mainmap (props){
 			attributionControl={false}
 			center={center}
 			zoom={10}
-			style={{ height: '95%', width: '100%' }}>
+			style={{ height: "100%", width: "100%" }}>
 			<LayersControl position='topright'>
 				<BaseLayer checked name='OSM'>
 					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />

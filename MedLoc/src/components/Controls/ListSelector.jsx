@@ -1,42 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from "@material-ui/core/Tooltip";
 
-import Typography from '@material-ui/core/Typography';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from "@material-ui/core/Typography";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import MLSetup from "./MLSetup";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		margin: '0px',
-		padding: '5px'
+		margin: "2px",
+		padding: "5px",
+		fontSize: "0.4rem"
 	},
 	cardHeader: {
 		padding: theme.spacing(1, 2)
 	},
 	list: {
-		width: 300,
-		height: '300px',
+		width: 280,
+		height: "200px",
 		backgroundColor: theme.palette.background.paper,
-		overflow: 'auto',
-		textTransform: 'capitalize'
+		overflow: "auto",
+		textTransform: "capitalize"
+	},
+	MuiTypography: {
+		fontSize: "0.4rem"
 	},
 	button: {
-		margin: theme.spacing(1, 1.5)
+		margin: theme.spacing(1, 1)
 	},
 	MuiListItem: {
-		padding: '0px',
+		padding: "0px",
 		margin: 0
 	}
 }));
@@ -71,7 +77,7 @@ export default function TransferList (props){
 		}
 	}
 	//Replacing _ with space for better display
-	let listItemsCleaned = listItems.map((item) => item.replace(/_/g, ' '));
+	let listItemsCleaned = listItems.map((item) => item.replace(/_/g, " "));
 
 	const classes = useStyles();
 	const [ checked, setChecked ] = React.useState([]);
@@ -90,7 +96,7 @@ export default function TransferList (props){
 		const newChecked = [ ...checked ];
 
 		if (currentIndex === -1) {
-			let fakeValue = value.replace(/ /g, '_');
+			let fakeValue = value.replace(/ /g, "_");
 			// Passing prettified feature names to be displayed in the list
 			props.methodProps(fakeValue);
 
@@ -149,7 +155,7 @@ export default function TransferList (props){
 							numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
 						}
 						disabled={items.length === 0}
-						inputProps={{ 'aria-label': 'all items selected' }}
+						inputProps={{ "aria-label": "all items selected" }}
 					/>
 				}
 				title={title}
@@ -168,7 +174,7 @@ export default function TransferList (props){
 									checked={checked.indexOf(value) !== -1}
 									tabIndex={-1}
 									disableRipple
-									inputProps={{ 'aria-labelledby': labelId }}
+									inputProps={{ "aria-labelledby": labelId }}
 								/>
 							</ListItemIcon>
 							<ListItemText id={labelId} primary={`${value}`} />
@@ -191,7 +197,7 @@ export default function TransferList (props){
 							numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
 						}
 						disabled={items.length === 0}
-						inputProps={{ 'aria-label': 'all items selected' }}
+						inputProps={{ "aria-label": "all items selected" }}
 					/>
 				}
 				title={title}
@@ -213,7 +219,7 @@ export default function TransferList (props){
 									checked={checked.indexOf(value) !== -1}
 									tabIndex={-1}
 									disableRipple
-									inputProps={{ 'aria-labelledby': labelId }}
+									inputProps={{ "aria-labelledby": labelId }}
 								/>
 							</ListItemIcon>
 							<ListItemText id={labelId} primary={`${value}`} />
@@ -227,7 +233,7 @@ export default function TransferList (props){
 
 	return (
 		<React.Fragment>
-			<Tooltip title={'Hover over each section to learn about how they work'}>
+			<Tooltip title={"Hover over each section to learn about how they work"}>
 				<Typography variant='h6' className={classes.title}>
 					Features Selection
 				</Typography>
@@ -236,11 +242,11 @@ export default function TransferList (props){
 			<Grid
 				container
 				spacing={0}
-				justify='center'
+				direction='column'
+				justify='space-evenly'
 				alignItems='center'
-				alignContent='center'
 				className={classes.root}>
-				<Grid item>{customList('Features', left)}</Grid>
+				<Grid item>{customList("Features", left)}</Grid>
 				<Grid item>
 					<Grid container direction='row' alignItems='center'>
 						<Button
@@ -265,7 +271,13 @@ export default function TransferList (props){
 						</Button>
 					</Grid>
 				</Grid>
-				<Grid item>{customListSelected('Selected Features', right)}</Grid>
+				<Grid item>{customListSelected("Selected Features", right)}</Grid>
+				<Grid item>
+					{" "}
+					<Typography variant='overline' className={classes.title}>
+						Number of Clusters
+					</Typography>{" "}
+				</Grid>
 			</Grid>
 		</React.Fragment>
 	);
