@@ -54,7 +54,7 @@ export default function SimpleSelect (props){
 				</FormControl>
 				<RunButton
 					propsOnClick={() => {
-						props.handleSubmit(cluster, props.userFeatures);
+						props.handleSubmit(props.userFeatures, cluster);
 					}}
 				/>
 			</Grid>

@@ -1,20 +1,5 @@
-/* .grid-cell {
-    border: 1px solid #eee;
-    box-shadow: 1px 5px 5px #eee;
-    border-radius: 5px;
-    background-color: #fff;
-    padding: 20px 0;
-}
-
-.grid-header {
-    margin: 0 2rem;
-    font-size: large;
-    font-weight: 700;
-} */
-
 :root {
     --main-radius: 5px;
-    --main-padding: 5px;
     background: #2c698d;
 }
 

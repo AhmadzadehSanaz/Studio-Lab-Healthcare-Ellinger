@@ -11,7 +11,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import HelpIcon from "@material-ui/icons/Help";
-
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -184,10 +184,9 @@ export default function TransferList (props){
 				}
 				title={title}
 				subheader={`${numberOfChecked(items)}/${items.length} selected`}>
-				{" "}
 				<Tooltip title={"Hover over each section to learn about how they work"}>
 					<HelpIcon />
-				</Tooltip>{" "}
+				</Tooltip>
 			</CardHeader>
 			<Divider />
 			<List className={classes.list} dense={true} component='div' role='list'>
@@ -318,6 +317,9 @@ export default function TransferList (props){
 				<Grid item>
 					<Typography variant='overline' className={classes.title}>
 						Number of Clusters
+						<Tooltip title={"Hover over each section to learn about how they work"}>
+							<InfoOutlinedIcon style={{ marginTop: "3px" }} fontSize='small' />
+						</Tooltip>{" "}
 					</Typography>{" "}
 				</Grid>
 			</Grid>
