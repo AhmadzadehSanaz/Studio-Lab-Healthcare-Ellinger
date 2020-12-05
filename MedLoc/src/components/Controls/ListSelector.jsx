@@ -10,7 +10,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import HelpIcon from "@material-ui/icons/Help";
 
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import Typography from "@material-ui/core/Typography";
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 		textTransform: "capitalize"
 	},
 	MuiTypography: {
-		fontSize: "0.4rem"
+		fontSize: "0.1rem"
 	},
 	button: {
 		margin: theme.spacing(1, 1)
@@ -81,6 +84,8 @@ export default function TransferList (props){
 
 	const classes = useStyles();
 	const [ checked, setChecked ] = React.useState([]);
+	const [ preview, setPreview ] = React.useState();
+	console.log(preview, "preview");
 	const [ left, setLeft ] = React.useState(listItemsCleaned.reverse());
 	const [ right, setRight ] = React.useState([]);
 
@@ -98,7 +103,6 @@ export default function TransferList (props){
 		if (currentIndex === -1) {
 			let fakeValue = value.replace(/ /g, "_");
 			// Passing prettified feature names to be displayed in the list
-			props.methodProps(fakeValue);
 
 			newChecked.push(value);
 		} else {
@@ -106,6 +110,22 @@ export default function TransferList (props){
 		}
 
 		setChecked(newChecked);
+	};
+
+	const handleTogglePreview = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [ ...checked ];
+
+		if (currentIndex === -1) {
+			let fakeValue = value.replace(/ /g, "_");
+			// Passing prettified feature names to be displayed in the list
+			props.methodProps(fakeValue);
+
+			// newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
+		setPreview(value);
 	};
 
 	const handleToggleSelected = (value) => () => {
@@ -148,35 +168,53 @@ export default function TransferList (props){
 			<CardHeader
 				className={classes.cardHeader}
 				avatar={
-					<Checkbox
-						onClick={handleToggleAll(items)}
-						checked={numberOfChecked(items) === items.length && items.length !== 0}
-						indeterminate={
-							numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
-						}
-						disabled={items.length === 0}
-						inputProps={{ "aria-label": "all items selected" }}
-					/>
+					<div>
+						<Checkbox
+							fontSize='small'
+							onClick={handleToggleAll(items)}
+							checked={numberOfChecked(items) === items.length && items.length !== 0}
+							indeterminate={
+								numberOfChecked(items) !== items.length &&
+								numberOfChecked(items) !== 0
+							}
+							disabled={items.length === 0}
+							inputProps={{ "aria-label": "all items selected" }}
+						/>
+					</div>
 				}
 				title={title}
-				subheader={`${numberOfChecked(items)}/${items.length} selected`}
-			/>
+				subheader={`${numberOfChecked(items)}/${items.length} selected`}>
+				{" "}
+				<Tooltip title={"Hover over each section to learn about how they work"}>
+					<HelpIcon />
+				</Tooltip>{" "}
+			</CardHeader>
 			<Divider />
 			<List className={classes.list} dense={true} component='div' role='list'>
 				{items.map((value) => {
 					const labelId = `transfer-list-all-item-${value}-label`;
 
 					return (
-						<ListItem key={value} role='listitem' button>
-							<ListItemIcon>
-								<Checkbox
-									onClick={handleToggle(value)}
-									checked={checked.indexOf(value) !== -1}
-									tabIndex={-1}
-									disableRipple
-									inputProps={{ "aria-labelledby": labelId }}
-								/>
-							</ListItemIcon>
+						<ListItem key={value} role='listitem' button disableRipple='true'>
+							<Checkbox
+								fontSize='small'
+								onClick={handleToggle(value)}
+								checked={checked.indexOf(value) !== -1}
+								tabIndex={-1}
+								disableRipple
+								inputProps={{ "aria-labelledby": labelId }}
+							/>
+
+							{/* preview stuff */}
+							<Checkbox
+								icon={<VisibilityOffIcon fontSize='small' />}
+								checkedIcon={<VisibilityIcon fontSize='small' />}
+								onClick={handleTogglePreview(value)}
+								checked={value === preview}
+								tabIndex={-1}
+								disableRipple
+								inputProps={{ "aria-labelledby": labelId }}
+							/>
 							<ListItemText id={labelId} primary={`${value}`} />
 						</ListItem>
 					);
@@ -191,6 +229,7 @@ export default function TransferList (props){
 				className={classes.cardHeader}
 				avatar={
 					<Checkbox
+						fontSize='small'
 						onClick={handleToggleAll(items)}
 						checked={numberOfChecked(items) === items.length && items.length !== 0}
 						indeterminate={
@@ -210,18 +249,28 @@ export default function TransferList (props){
 
 					return (
 						<ListItem
+							spacing={0}
 							key={value}
 							role='listitem'
 							button
 							onClick={handleToggleSelected(value)}>
-							<ListItemIcon>
-								<Checkbox
-									checked={checked.indexOf(value) !== -1}
-									tabIndex={-1}
-									disableRipple
-									inputProps={{ "aria-labelledby": labelId }}
-								/>
-							</ListItemIcon>
+							<Checkbox
+								checked={checked.indexOf(value) !== -1}
+								tabIndex={-1}
+								disableRipple
+								inputProps={{ "aria-labelledby": labelId }}
+							/>
+							{/* preview stuff */}
+							<Checkbox
+								icon={<VisibilityOffIcon fontSize='small' />}
+								checkedIcon={<VisibilityIcon fontSize='small' />}
+								onClick={handleTogglePreview(value)}
+								checked={value === preview}
+								tabIndex={-1}
+								disableRipple
+								inputProps={{ "aria-labelledby": labelId }}
+							/>
+
 							<ListItemText id={labelId} primary={`${value}`} />
 						</ListItem>
 					);
@@ -233,12 +282,6 @@ export default function TransferList (props){
 
 	return (
 		<React.Fragment>
-			<Tooltip title={"Hover over each section to learn about how they work"}>
-				<Typography variant='h6' className={classes.title}>
-					Features Selection
-				</Typography>
-			</Tooltip>
-
 			<Grid
 				container
 				spacing={0}
@@ -273,7 +316,6 @@ export default function TransferList (props){
 				</Grid>
 				<Grid item>{customListSelected("Selected Features", right)}</Grid>
 				<Grid item>
-					{" "}
 					<Typography variant='overline' className={classes.title}>
 						Number of Clusters
 					</Typography>{" "}

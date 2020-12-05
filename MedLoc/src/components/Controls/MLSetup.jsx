@@ -10,8 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import RunButton from "../Interface/RunButton";
 const useStyles = makeStyles((theme) => ({
 	formControl: {
-		margin: theme.spacing(0),
-		minWidth: "60%"
+		margin: theme.spacing(1),
+		minWidth: "40%"
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(1)
@@ -28,7 +28,7 @@ export default function SimpleSelect (props){
 
 	return (
 		<div>
-			<Grid container direction='column' alignItems='center' justify='center'>
+			<Grid container direction='row' alignItems='center' justify='center'>
 				<FormControl className={classes.formControl}>
 					{/* <InputLabel shrink id='demo-simple-select-placeholder-label-label'>
 						Clusters

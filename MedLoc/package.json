@@ -29,6 +29,7 @@
         "react-leaflet": "^2.7.0",
         "react-leaflet-choropleth": "^2.0.1",
         "react-scripts": "4.0.0",
+        "simple-statistics": "^7.3.2",
         "swr": "^0.3.8",
         "web-vitals": "^0.2.4"
     },

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Map, GeoJSON, TileLayer, LayersControl } from "react-leaflet";
 import FeatureName from "./Legend";
 import HighlightedGeoJson from "./HighlightedGeoJson";
+import * as ss from "simple-statistics";
 import * as d3 from "d3";
 
 function PreviewMap (props){
@@ -29,42 +30,43 @@ function PreviewMap (props){
 	let columnName = props.userSelectedItems;
 
 	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
-	const setValues = new Set(columnValues);
+	let type = typeof columnValues[0];
+	let colorScale;
+	if (type !== "string") {
+		let colorsBrewer = [
+			"#f6eff7",
+			"#d0d1e6",
+			"#a6bddb",
+			"#67a9cf",
+			"#3690c0",
+			"#02818a",
+			"#016450"
+		];
+		let groups = ss.ckmeans(columnValues, 7);
+		let breaks = groups.map((cluster) => {
+			return cluster[0];
+		});
 
-	let legendValues = d3.extent(columnValues);
-	//Linear breaks
-	let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ "coral", "blue" ]);
-	let colorScaleCategorical = d3
-		.scaleLinear()
-		.domain(d3.extent(columnValues))
-		.range([ "coral", "blue" ]);
-
-	let colors;
-	let tempExtent = d3.extent(columnValues);
-	if (tempExtent !== undefined) {
-		colors = split(tempExtent[0], tempExtent[1], 5);
+		//Quant Breaks
+		colorScale = d3.scaleQuantile().domain(breaks).range(colorsBrewer);
+	} else {
+		console.log(d3.schemeCategory10);
+		let values = new Set(columnValues);
+		colorScale = d3.scaleOrdinal().domain(values).range(d3.schemeCategory10);
 	}
-	//Quant Breaks
-	let colorScaleQuant = d3
-		.scaleQuantize()
-		.domain(colors)
-		.range([ "coral", "green", "blue", "yellow", "blue" ]);
 
-	function split (left, right, parts){
-		var result = [],
-			delta = (right - left) / (parts - 1);
-		while (left < right) {
-			result.push(left);
-			left += delta;
-		}
-		result.push(right);
-		return result;
-	}
+	// let extent = d3.extent(columnValues);
+	// //Linear breaks
+	// let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ "coral", "blue" ]);
+	// let colorScaleCategorical = d3
+	// 	.scaleLinear()
+	// 	.domain(d3.extent(columnValues))
+	// 	.range([ "coral", "blue" ]);
 
 	//Coloring each feature based on the user selected values from the list selector
 	function styles (feature){
 		return {
-			fillColor: colorScaleQuant(feature.properties[columnName]),
+			fillColor: colorScale(feature.properties[columnName]),
 
 			weight: 0,
 			opacity: 1,
