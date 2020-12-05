@@ -1,5 +1,5 @@
-import { MapControl, withLeaflet } from 'react-leaflet';
-import L from 'leaflet';
+import { MapControl, withLeaflet } from "react-leaflet";
+import L from "leaflet";
 
 class Legend extends MapControl {
 	createLeafletElement (props) {}
@@ -10,20 +10,19 @@ class Legend extends MapControl {
 		function getColor (d){
 			var color;
 			if (d > 1000) {
-				color = '#800026';
+				color = "#800026";
 			} else if (d > 500) {
-				color = '#BD0026';
+				color = "#BD0026";
 			} else if (d > 200) {
-				color = '#E31A1C';
+				color = "#E31A1C";
 			} else if (d > 100) {
-				color = '#FC4E2A';
+				color = "#FC4E2A";
 			} else if (d > 50) {
-				color = '#FD8D3C';
-			} else color = '#FEB24C';
+				color = "#FD8D3C";
+			} else color = "#FEB24C";
 			return color;
 		}
 
-		// console.log(this.props.legendValues, 'zeinab');
 		function split (left, right, parts){
 			var result = [],
 				delta = (right - left) / (parts - 1);
@@ -36,11 +35,15 @@ class Legend extends MapControl {
 		}
 		let mamad = split(100, 200, 5);
 
-		const legend = L.control({ position: 'bottomleft' });
+		const legend = L.control({ position: "topright" });
 
 		legend.onAdd = () => {
-			const div = L.DomUtil.create('div', 'info legend');
-			const grades = [ 0, 10, 20, 50, 100, 200, 500, 3000 ];
+			const div = L.DomUtil.create("div", "info legend");
+			const grades = [
+				this.props.extentProps,
+				this.props.extentProps,
+				this.props.extentProps
+			];
 			let labels = [];
 			let from;
 			let to;
@@ -55,12 +58,12 @@ class Legend extends MapControl {
 						'"></i> ' +
 						from +
 						(
-							to ? '&ndash;' + to :
-							'+')
+							to ? "&ndash;" + to :
+							"+")
 				);
 			}
 
-			div.innerHTML = labels.join('<br>');
+			div.innerHTML = labels.join("<br>");
 			return div;
 		};
 

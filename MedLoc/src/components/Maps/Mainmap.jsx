@@ -93,7 +93,6 @@ function Mainmap (props){
 			if (geojson.current) {
 				geojson.current.leafletElement.eachLayer(function (layer){
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
-					const legend = L.control({ position: "bottomright" });
 				});
 			}
 		},
@@ -108,14 +107,8 @@ function Mainmap (props){
 			center={center}
 			zoom={10}
 			style={{ height: "100%", width: "100%" }}>
-			<LayersControl position='topright'>
-				<BaseLayer checked name='OSM'>
-					<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-				</BaseLayer>
-				<BaseLayer name='MapBox'>
-					<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
-				</BaseLayer>
-			</LayersControl>
+			<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
+
 			<GeoJSON ref={geojson} data={props.dataProps} style={styles} />
 
 			<Legend extentProps={legendValues} />

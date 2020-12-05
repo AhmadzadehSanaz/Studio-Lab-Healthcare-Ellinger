@@ -150,21 +150,6 @@ function DashApp (){
 								userClickedProp={userClicked}
 							/>
 						</span>
-
-						<h6
-							style={{
-								position: "absolute",
-								top: "280px",
-								right: "15",
-								marginLeft: "20px",
-								padding: "5px",
-								height: "30px",
-								zIndex: "9999",
-								background: "lightgrey",
-								borderRadius: "5px"
-							}}>
-							{userSelected.replace(/_/g, " ")}{" "}
-						</h6>
 					</div>
 					{/* ------------------ Main Map ------------------*/}
 					<div className='content5 generalComp'>
