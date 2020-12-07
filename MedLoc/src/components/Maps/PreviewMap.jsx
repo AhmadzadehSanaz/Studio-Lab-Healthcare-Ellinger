@@ -2,43 +2,42 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { Map, GeoJSON, TileLayer, LayersControl } from "react-leaflet";
-import FeatureName from "./Legend";
-import HighlightedGeoJson from "./HighlightedGeoJson";
+
 import * as ss from "simple-statistics";
 import * as d3 from "d3";
 import L from "leaflet";
-import Legend from "./Legend";
 
 function PreviewMap (props){
 	//getting the first object from geojson to extract column names
 
-	let dataPopulator = props.dataProps.features;
+	let dataPostulator = props.dataProps.features;
 	const geojson = useRef();
 	const legend = useRef(null);
 	const map = useRef();
 	const featureName = useRef(null);
 
-	if (dataPopulator !== null) {
-		for (var key in dataPopulator) {
-			if (dataPopulator.hasOwnProperty(key)) {
-				let firstProp = dataPopulator[key];
-				let listItems = Object.keys(firstProp.properties);
+	// if (dataPostulator !== null) {
+	// 	for (var key in dataPostulator) {
+	// 		if (dataPostulator.hasOwnProperty(key)) {
+	// 			// getting all the feature names
+	// 			let firstProp = dataPostulator[key];
+	// 			let listItems = Object.keys(firstProp.properties);
 
-				// let listValue = Object.values(firstProp.properties);
-
-				break;
-			}
-		}
-	}
+	// 			break;
+	// 		}
+	// 	}
+	// }
 
 	//Getting the values from the feature and defining color ranges
-	let columnName = props.userSelectedItems;
-	let columnNameClean = columnName.replace(/_/g, " ");
-
-	let columnValues = dataPopulator.map((f) => f.properties[columnName]);
+	let columnName = props.userSelectedItems; //user selected feature on the feature selection
+	let columnNameClean = columnName.replace(/_/g, " "); //prettifying selected feature name
+	// getting all the values for the selected feature
+	let columnValues = dataPostulator.map((f) => f.properties[columnName]);
 	let type = typeof columnValues[0];
 	let breaks;
 	let colorScale;
+
+	// checking if the values for selected feature are string or number
 	if (type !== "string") {
 		let colorsBrewer = [
 			"#f6eff7",
@@ -49,7 +48,9 @@ function PreviewMap (props){
 			"#02818a",
 			"#016450"
 		];
+		//clustering the values for configuring the natural brakes
 		let groups = ss.ckmeans(columnValues, 7);
+
 		breaks = groups.map((cluster) => {
 			return cluster[0];
 		});
@@ -57,19 +58,14 @@ function PreviewMap (props){
 		//Quant Breaks
 		colorScale = d3.scaleQuantile().domain(breaks).range(colorsBrewer);
 	} else {
-		breaks = new Set(columnValues);
+		// string values color range determination
+
+		breaks = new Set(columnValues); //getting set of the string values for the selected feature
 		colorScale = d3.scaleOrdinal().domain(breaks).range(d3.schemeCategory10);
 	}
 
-	// let extent = d3.extent(columnValues);
-	// //Linear breaks
-	// let colorScale = d3.scaleLinear().domain(d3.extent(columnValues)).range([ "coral", "blue" ]);
-	// let colorScaleCategorical = d3
-	// 	.scaleLinear()
-	// 	.domain(d3.extent(columnValues))
-	// 	.range([ "coral", "blue" ]);
-
 	//Coloring each feature based on the user selected values from the list selector
+	//this function runs for every geojson cell
 	function styles (feature){
 		return {
 			fillColor: colorScale(feature.properties[columnName]),
@@ -82,25 +78,24 @@ function PreviewMap (props){
 		};
 	}
 
-	//Leaflet Components
-	const { BaseLayer, Overlay } = LayersControl;
-
 	//Map center on load
 	const center = [ 41.8781, -87.6298 ];
 
 	useEffect(
 		() => {
 			if (geojson.current) {
+				// using useRef to and setting it to leaflet component on the app
+				// then looping through each feature and adding pop ups here we are using leaflet core functions
 				geojson.current.leafletElement.eachLayer(function (layer){
 					// console.log(layer);
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
 				});
-				// map.current.leafletElement.eachLayer((layer) => {
-				// 	console.log(layer);
-				// });
+				// checking if there is already a legend exists and removing before adding an updated legend
 				if (legend.current !== null) {
 					map.current.leafletElement.removeControl(legend.current);
 				}
+				// checking if there is already a feature name exists and removing before adding an updated feature name
+
 				if (featureName.current !== null) {
 					map.current.leafletElement.removeControl(featureName.current);
 				}
@@ -116,20 +111,21 @@ function PreviewMap (props){
 
 				legend.current.onAdd = () => {
 					const div = L.DomUtil.create("div", "info legend");
-					// const grades = [
-					// 	this.props.extentProps,
-					// 	this.props.extentProps,
-					// 	this.props.extentProps
-					// ];
+
 					let labels = [];
 					let from;
 					let to;
+
 					breaks = Array.from(breaks);
+					// getting the first 7 breaks to visulise them on the legend
 					let breaksCopy = Array.from(breaks).slice(0, 7);
+
 					if (breaks > 7 && type === "string") {
+						//if values are strings we push the the additional feature to map as others..
 						breaksCopy.push("Others...");
 					}
 					for (let i = 0; i < breaksCopy.length; i++) {
+						//some checks to determine the best way to visualize  the given data on the legend
 						if (type === "number") {
 							let isinteger = breaksCopy[i] % 1 === 0;
 							from =

@@ -1,8 +1,8 @@
-import { useLeaflet } from 'react-leaflet';
-import L from 'leaflet';
-import { useEffect } from 'react';
-import statesData from './states.json';
-import { style } from './utils.js';
+import { useLeaflet } from "react-leaflet";
+import L from "leaflet";
+import { useEffect } from "react";
+import statesData from "./states.json";
+import { style } from "./utils.js";
 
 const HighlightedGeoJson = (props) => {
 	const { map } = useLeaflet();
@@ -12,21 +12,21 @@ const HighlightedGeoJson = (props) => {
 		const info = L.control();
 
 		info.onAdd = () => {
-			info._div = L.DomUtil.create('div', 'info');
+			info._div = L.DomUtil.create("div", "info");
 			info.update();
 			return info._div;
 		};
 
 		info.update = (props) => {
 			info._div.innerHTML =
-				'<h4>US Population Density</h4>' +
+				"<h4>US Population Density</h4>" +
 				(
-					props ? '<b>' +
+					props ? "<b>" +
 					props.name +
-					'</b><br />' +
+					"</b><br />" +
 					props.density +
-					' people / mi<sup>2</sup>' :
-					'Hover over a state');
+					" people / mi<sup>2</sup>" :
+					"Hover over a state");
 		};
 
 		info.addTo(map);
@@ -36,14 +36,10 @@ const HighlightedGeoJson = (props) => {
 
 			layer.setStyle({
 				weight: 5,
-				color: '#666',
-				dashArray: '',
+				color: "#666",
+				dashArray: "",
 				fillOpacity: 0.7
 			});
-
-			if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-				layer.bringToFront();
-			}
 
 			info.update(layer.feature.properties);
 		};

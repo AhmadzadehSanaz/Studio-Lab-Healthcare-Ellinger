@@ -1,44 +1,16 @@
 /* eslint-disable no-unreachable */
 import React, { useState, useEffect, useRef } from "react";
 import { Map, GeoJSON, TileLayer, LayersControl, Popup } from "react-leaflet";
-import Legend from "./Legend";
-import HighlightedGeoJson from "./HighlightedGeoJson";
 import L from "leaflet";
+import HighlightedGeoJson from "./HighlightedGeoJson";
 import * as d3 from "d3";
-import dummy from "./states.json";
 
 function Mainmap (props){
 	//getting the first object from geojson to extract column names
 
-	let clusterViz = dummy.clean_data;
-
 	let dataPopulator = props.dataProps.features;
 	// let dataPopulator = clusterViz;
 	const geojson = useRef();
-
-	// if (clusterViz !== null) {
-	// 	for (var key in clusterViz) {
-	// 		if (clusterViz.hasOwnProperty(key)) {
-	// 			let firstPropA = clusterViz[key];
-	// 			let listItemsA = Object.keys(firstPropA.properties);
-	// 			// let listValue = Object.values(firstProp.properties);
-
-	// 			break;
-	// 		}
-	// 	}
-	// }
-
-	if (dataPopulator !== null) {
-		for (var key in dataPopulator) {
-			if (dataPopulator.hasOwnProperty(key)) {
-				let firstProp = dataPopulator[key];
-				let listItems = Object.keys(firstProp.properties);
-				// let listValue = Object.values(firstProp.properties);
-
-				break;
-			}
-		}
-	}
 
 	//Getting the values from the feature and defining color ranges
 	let columnName = props.userSelectedItems;
@@ -95,6 +67,25 @@ function Mainmap (props){
 					layer.bindPopup(`${columnName} : ${layer.feature.properties[columnName]}`);
 				});
 			}
+			function highlightFeature (e){
+				var layer = e.target;
+
+				layer.setStyle({
+					weight: 5,
+					color: "#666",
+					dashArray: "",
+					fillOpacity: 0.7
+				});
+			}
+			function resetHighlight (e){
+				geojson.resetStyle(e.target);
+			}
+			const onEachFeature = (feature, layer) => {
+				layer.on({
+					mouseover: highlightFeature,
+					mouseout: resetHighlight
+				});
+			};
 		},
 		[ columnName ]
 	);
@@ -110,8 +101,6 @@ function Mainmap (props){
 			<TileLayer url='https://api.mapbox.com/styles/v1/aradnia/ckfcn7zq20mfb19mswcdnhd6u/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYXJhZG5pYSIsImEiOiJjanlhZDdienQwNGN0M212MHp3Z21mMXhvIn0.lPiKb_x0vr1H62G_jHgf7w' />
 
 			<GeoJSON ref={geojson} data={props.dataProps} style={styles} />
-
-			<Legend extentProps={legendValues} />
 		</Map>
 	);
 }

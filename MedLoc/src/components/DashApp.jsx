@@ -101,7 +101,10 @@ function DashApp (){
 		console.log(mlRequest);
 		axios
 			.post(mlApiUrl, JSON.stringify(mlRequest), {
+				withCredentials: true,
 				headers: {
+					"Access-Control-Allow-Origin": "*",
+					Accept: "application/json",
 					"Content-Type": "application/json"
 				}
 			})
