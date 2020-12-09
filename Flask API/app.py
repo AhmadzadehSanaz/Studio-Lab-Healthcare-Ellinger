@@ -148,6 +148,7 @@ def kmeans_silouhette_method_optimun_cluster_number(data,features=None,n_cluster
     K = range(2,10)
     for k in K:
         k_means = KMeans(n_clusters=k)
+        model = k_means.fit(standarized_data)
         sum_of_squared_distances.append(k_means.inertia_)
         labels = k_means.labels_
         CV_score = metrics.silhouette_score(standarized_data, labels, metric = 'euclidean')
