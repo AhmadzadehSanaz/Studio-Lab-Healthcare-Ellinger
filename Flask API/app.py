@@ -7,6 +7,8 @@ import json
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn import metrics
 
 '''
 Function to get all the data from the github repo
@@ -125,8 +127,41 @@ def kmeans_cluster_generator(data,features=None,n_clusters=5):
     
     return lean_data
 
+def kmeans_silouhette_method_optimun_cluster_number(data,features=None,n_clusters=5):
+    #Convert the json data into a pandas data frame
+    data_frame = pd.read_json(data)
+
+    #Generate normalization of values from 0 to 1
+    min_max_scaler = MinMaxScaler()
+
+    #Normalize all the values in data set to fit between 0 to 1
+    data_frame[data_frame.columns] = min_max_scaler.fit_transform(data_frame)
+
+    #Get all the features in the data set
+    if features:
+        data_frame = data_frame[features]
+
+    standarized_data = StandardScaler().fit_transform(data_frame)
+
+    sum_of_squared_distances = []
+    CH_scores = []
+    K = range(2,10)
+    for k in K:
+        k_means = KMeans(n_clusters=k)
+        sum_of_squared_distances.append(k_means.inertia_)
+        labels = k_means.labels_
+        CV_score = metrics.silhouette_score(standarized_data, labels, metric = 'euclidean')
+        CH_score = metrics.calinski_harabasz_score(standarized_data, labels)
+        CH_scores.append(CH_score)
+
+    highest_CH_score = max(CH_scores)
+    ideal_cluster_number = CH_scores.index(highest_CH_score) + 2
+    print(ideal_cluster_number)
+
+    return str(ideal_cluster_number)
+
 #Creation of the Flask Application
-app = Flask(__name__,static_folder='./build', static_url_path='/')
+app = Flask(__name__,static_folder='./MedLoc/build', static_url_path='/')
 api = Api(app)
 CORS(app,support_credentials=True)
 
@@ -142,9 +177,29 @@ cluster_post_arguments.add_argument("number of clusters", type=int)
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/get_kmeans_cluster/', methods=['POST'])
+@app.route('/get_kmeans_silouhette_optimun_cluster_number/', methods=['POST'])
+def kmeans_silouhette_cluster_number():
 
-def post_data():
+    #Github URL data repo location
+    github_url = "https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson"
+
+    #Get and clean data from the github repo & test variables
+    #Data to send to the API
+    data = get_data(github_url)
+
+    #Define and get arguments from request
+    arguments = cluster_post_arguments.parse_args()
+    selected_attributes = arguments['selected features']
+    number_of_cluster = arguments['number of clusters']
+    #selected_attributes = request.form['selected features']
+    #number_of_cluster = request.form['number of clusters']
+
+    ideal_cluster_number = kmeans_silouhette_method_optimun_cluster_number(data, selected_attributes, number_of_cluster)
+
+    return ideal_cluster_number
+
+@app.route('/get_kmeans_cluster/', methods=['POST'])
+def post_kmeans_cluster():
 
     #Github URL data repo location
     github_url = "https://github.com/AhmadzadehSanaz/Studio-Lab-Healthcare-Ellinger/raw/main/Data%20Pipeline/hexagon_collection_master.geojson"
