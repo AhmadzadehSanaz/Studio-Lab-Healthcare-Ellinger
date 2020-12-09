@@ -127,7 +127,7 @@ def kmeans_cluster_generator(data,features=None,n_clusters=5):
     
     return lean_data
 
-def kmeans_silouhette_method_optimun_cluster_number(data,features=None,n_clusters=5):
+def kmeans_silouhette_method_optimun_cluster_number(data,features=None):
     #Convert the json data into a pandas data frame
     data_frame = pd.read_json(data)
 
@@ -191,11 +191,11 @@ def kmeans_silouhette_cluster_number():
     #Define and get arguments from request
     arguments = cluster_post_arguments.parse_args()
     selected_attributes = arguments['selected features']
-    number_of_cluster = arguments['number of clusters']
+    #number_of_cluster = arguments['number of clusters']
     #selected_attributes = request.form['selected features']
     #number_of_cluster = request.form['number of clusters']
 
-    ideal_cluster_number = kmeans_silouhette_method_optimun_cluster_number(data, selected_attributes, number_of_cluster)
+    ideal_cluster_number = kmeans_silouhette_method_optimun_cluster_number(data, selected_attributes)
 
     return ideal_cluster_number
 
